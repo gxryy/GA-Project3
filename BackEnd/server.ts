@@ -3,7 +3,12 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const PORT = process.env.PORT || 5001;
-const Bookings = require("./model/bookings")
+const Bookings = require("./model/bookings");
+
+// DB CONNECTION
+const connectDB = require("./db/db");
+connectDB(process.env.ATLAS_URI_RW);
+
 // CONFIGURATION
 const app = express();
 app.use(cors());
@@ -11,8 +16,8 @@ app.use(express.json()); //input parser for JSON
 app.use(express.urlencoded({ extended: false }));
 
 // ROUTER/CONTROLLER
-// app.use("/", controller);
-
+const mainController = require("./controller/mainController");
+app.use("/", mainController);
 // CONST
 
 //FUNCTIONS
