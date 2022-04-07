@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const PORT = process.env.PORT || 5001;
-
+const Bookings = require("./model/bookings")
 // CONFIGURATION
 const app = express();
 app.use(cors());
@@ -25,7 +25,7 @@ console.log(destinationData);
 
 //MAIN
 
-// ROUTES
+// // ROUTES
 
 // Listener
 app.listen(PORT, () => {

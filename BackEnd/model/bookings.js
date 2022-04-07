@@ -4,18 +4,20 @@ const Schema = mongoose.Schema;
 const bookingsSchema = Schema({
   details: [
     {
-      title: { type: String, required: true },
-      firstname: { type: String, required: true },
-      lastname: { type: String, required: true },
-      mobile: { type: String, required: true },
-      email: { type: String, required: true },
+      title: { type: String},
+      firstname: { type: String },
+      lastname: { type: String, },
+      mobile: { type: Number, minLength: 8 },
+      email: { type: String },
     },
   ],
+
   flightdetails: [
-    { flightnumber: { type: String }, required: true },
-    { seatnumber: { type: String }, required: true },
+    {
+      flightnumber: { type: String},
+      seatnumber: { type: String },
+    },
   ],
-  hasCheckedIn: Boolean,
   flyerNumber: Number,
   bookingRef: Number,
 });
