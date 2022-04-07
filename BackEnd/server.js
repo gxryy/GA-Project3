@@ -4,7 +4,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const PORT = process.env.PORT || 5001;
-
+const Bookings = require("./model/bookings");
+const Flights = require("./model/flights");
 const connectDB = require("./db/db");
 connectDB(process.env.ATLAS_URI_RW);
 // CONFIGURATION
@@ -45,6 +46,24 @@ app.get("/bookings", async (req, res) => {
     bookingRef: "45A6",
   });
   await createBooking.save((err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.status(200).send({ msg: "Inserted to DB" });
+    }
+  });
+});
+
+// Flights
+app.get("/flights", async (req, res) => {
+  const createFlights = new Flights({
+    flightnumber: 714,
+    departuredate: "2022-04-10",
+    origin: "Singapore",
+    destination: "BangKok",
+    numofseats: 2,
+  });
+  await createFlights.save((err, data) => {
     if (err) {
       console.error(err);
     } else {
