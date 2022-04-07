@@ -4,6 +4,9 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const PORT = process.env.PORT || 5001;
+
+const connectDB = require("./db/db");
+connectDB(process.env.ATLAS_URI_RW);
 // CONFIGURATION
 const app = express();
 app.use(cors());
@@ -26,7 +29,30 @@ const fetchFlights = require("./SQ_API/fetchFlights");
 //DATA
 //MAIN
 // ROUTES
+app.get("/bookings", async (req, res) => {
+  const createBooking = new Bookings({
+    details: [
+      {
+        title: "Miss",
+        firstname: "Haha",
+        lastname: "Hehe",
+        mobile: 91820120,
+        email: "haha@gmail.com",
+      },
+    ],
+    flightdetails: [{ flightnumber: 712 }, { seatnumber: "1A" }],
+    flyerNumber: 123,
+    bookingRef: "45A6",
+  });
+  await createBooking.save((err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.status(200).send({ msg: "Inserted to DB" });
+    }
+  });
+});
 // Listener
 app.listen(PORT, () => {
-    console.log(`server started on port ${PORT}`);
+  console.log(`server started on port ${PORT}`);
 });
