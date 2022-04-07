@@ -16,14 +16,20 @@ app.use(express.urlencoded({ extended: false }));
 // CONST
 
 //FUNCTIONS
-const fetchDestinations = require("./fetchDestinations.js");
+const fetchDestinations = require("./SQ_API/fetchDestinations");
+const fetchFlights = require("./SQ_API/fetchFlights");
 
-fetchDestinations().then((response: object) => {
-  // to do the functions here
-  console.log(response);
-});
+// fetchDestinations().then((response: object) => {
+//   // to do the functions here
+//   console.log(response);
+// });
 
-//DATAç
+// fetchFlights().then((response: object) => {
+//   // to do the functions here
+//   console.log(response);
+// });
+
+//DATA
 
 //MAIN
 

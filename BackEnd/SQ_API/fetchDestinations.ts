@@ -30,7 +30,7 @@ module.exports = async () => {
     method: "POST",
   };
 
-  const data = await axios({
+  const response = await axios({
     method: "post",
     url,
     headers: {
@@ -41,5 +41,5 @@ module.exports = async () => {
     },
   });
 
-  return data;
+  return response.data;
 };

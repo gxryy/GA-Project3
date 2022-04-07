@@ -13,12 +13,17 @@ app.use(express.urlencoded({ extended: false }));
 // app.use("/", controller);
 // CONST
 //FUNCTIONS
-const fetchDestinations = require("./fetchDestinations.js");
-fetchDestinations().then((response) => {
-    // to do the functions here
-    console.log(response);
-});
-//DATAç
+const fetchDestinations = require("./SQ_API/fetchDestinations");
+const fetchFlights = require("./SQ_API/fetchFlights");
+// fetchDestinations().then((response: object) => {
+//   // to do the functions here
+//   console.log(response);
+// });
+// fetchFlights().then((response: object) => {
+//   // to do the functions here
+//   console.log(response);
+// });
+//DATA
 //MAIN
 // ROUTES
 // Listener

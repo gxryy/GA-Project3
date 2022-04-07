@@ -33,7 +33,7 @@ module.exports = () => __awaiter(void 0, void 0, void 0, function* () {
         },
         method: "POST",
     };
-    const data = yield axios({
+    const response = yield axios({
         method: "post",
         url,
         headers: {
@@ -43,5 +43,5 @@ module.exports = () => __awaiter(void 0, void 0, void 0, function* () {
             api_key: API_KEY,
         },
     });
-    return data;
+    return response.data;
 });
