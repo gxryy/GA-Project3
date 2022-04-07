@@ -30,7 +30,7 @@ module.exports = async () => {
     method: "POST",
   };
 
-  axios({
+  const response = await axios({
     method: "post",
     url,
     headers: {
@@ -39,8 +39,7 @@ module.exports = async () => {
       "x-signature": signature,
       api_key: API_KEY,
     },
-  }).then((response: Object) => {
-    console.log(`response received`);
-    return `response`;
   });
+
+  return response.data;
 };

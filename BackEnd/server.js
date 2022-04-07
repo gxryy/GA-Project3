@@ -4,8 +4,9 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const PORT = process.env.PORT || 5001;
-const Flights = require("./model/flights.js");
 
+const connectDB = require("./db/db");
+connectDB(process.env.ATLAS_URI_RW);
 // CONFIGURATION
 const app = express();
 app.use(cors());
@@ -15,21 +16,35 @@ app.use(express.urlencoded({ extended: false }));
 // app.use("/", controller);
 // CONST
 //FUNCTIONS
-const fetchDestinations = require("./fetchDestinations.js");
-const { default: mongoose } = require("mongoose");
-const destinationData = fetchDestinations();
-console.log(destinationData);
-
+const fetchDestinations = require("./SQ_API/fetchDestinations");
+const fetchFlights = require("./SQ_API/fetchFlights");
+// fetchDestinations().then((response: object) => {
+//   // to do the functions here
+//   console.log(response);
+// });
+// fetchFlights().then((response: object) => {
+//   // to do the functions here
+//   console.log(response);
+// });
 //DATA
-app.get("/flights", async (req, res) => {
-  const createFlights = new Flights({
-    flightnumber: 714,
-    departuredate: "2022-04-10",
-    origin: "Singapore",
-    destination: "BangKok",
-    numofseats: 2,
+//MAIN
+// ROUTES
+app.get("/bookings", async (req, res) => {
+  const createBooking = new Bookings({
+    details: [
+      {
+        title: "Miss",
+        firstname: "Haha",
+        lastname: "Hehe",
+        mobile: 91820120,
+        email: "haha@gmail.com",
+      },
+    ],
+    flightdetails: [{ flightnumber: 712 }, { seatnumber: "1A" }],
+    flyerNumber: 123,
+    bookingRef: "45A6",
   });
-  await createFlights.save((err, data) => {
+  await createBooking.save((err, data) => {
     if (err) {
       console.error(err);
     } else {
@@ -37,18 +52,7 @@ app.get("/flights", async (req, res) => {
     }
   });
 });
-
-//MAIN
-// ROUTES
 // Listener
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);
-});
-
-mongoose.connect(
-  `mongodb+srv://${process.env.username}:${process.env.password}@airline.hpdbd.mongodb.net/test`,
-  { useNewUrlParser: true }
-);
-mongoose.connection.once("open", () => {
-  console.log("connected to mongoDB Atlas");
 });
