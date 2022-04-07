@@ -1,3 +1,4 @@
+export {};
 module.exports = async () => {
   //DEPENDANCIES
   const axios = require("axios");
