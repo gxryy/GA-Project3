@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const fetchDestinations = require("../SQ_API/fetchDestinations");
+const fetchFlights = require("../SQ_API/fetchFlights");
 const Bookings = require("../model/bookings");
 const Flights = require("../model/flights");
 
@@ -50,6 +51,23 @@ router.get("/flights", async (req, res) => {
 
 router.get("/getDestinations", (req, res) => {
   fetchDestinations().then((response) => {
+    // Parsing destination information
+    let destinations = [];
+    for (element of response.data.destinationList) {
+      console.log(element);
+      destinations.push({
+        airportCode: element.airportCode,
+        airportName: element.airportName,
+        cityName: element.cityName,
+        countryName: element.countryName,
+      });
+    }
+    res.json(destinations);
+  });
+});
+
+router.get("/getFlights", (req, res) => {
+  fetchFlights().then((response) => {
     // to do the functions here
     res.json(response);
   });

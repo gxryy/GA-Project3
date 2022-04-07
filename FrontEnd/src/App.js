@@ -4,7 +4,7 @@ import NavBar from "./components/NavBar";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { cyan } from "@mui/material/colors";
 import { Route, Routes } from "react-router";
-import SearchFlight from "./components/SearchFlight";
+import Test from "./components/Test";
 
 const theme = createTheme({
   palette: {
@@ -32,6 +32,7 @@ export default function App() {
           <Route path="/signup" element={<h1>Signup route</h1>} />
           <Route path="/results" element={<h1>Results route</h1>} />
           <Route path="/booking" element={<h1>Booking route</h1>} />
+          <Route path="/test" element={<Test />} />
           <Route
             path="/bookingSummary"
             element={<h1>bookingSummary route</h1>}

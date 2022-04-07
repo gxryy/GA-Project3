@@ -18,9 +18,9 @@ module.exports = async (details: object) => {
       itineraryDetails: [
         {
           originAirportCode: "SIN",
-          destinationAirportCode: "BKK",
-          departureDate: "2022-11-01",
-          returnDate: "2022-11-10",
+          destinationAirportCode: "XRY",
+          departureDate: "2022-05-11",
+          returnDate: "2022-05-19",
         },
       ],
       cabinClass: "Y",
