@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5001;
 const Bookings = require("./model/bookings");
 
 const connectDB = require("./db/db");
-connectDB(process.env.ATLAS_URI);
+connectDB(process.env.ATLAS_URI_RW);
 
 // CONFIGURATION
 const app = express();
@@ -39,7 +39,7 @@ app.get("/bookings", async (req, res) => {
     ],
     flightdetails: [{ flightnumber: 712 }, { seatnumber: "1A" }],
     flyerNumber: 123,
-    bookingRef: 456,
+    bookingRef: "45A6",
   });
   await createBooking.save((err, data) => {
     if (err) {

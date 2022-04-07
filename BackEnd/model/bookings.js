@@ -19,7 +19,7 @@ const bookingsSchema = Schema({
     },
   ],
   flyerNumber: Number,
-  bookingRef: Number,
+  bookingRef: String,
 });
 
 const Bookings = mongoose.model("Bookings", bookingsSchema);
