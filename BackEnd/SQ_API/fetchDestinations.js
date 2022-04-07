@@ -23,7 +23,6 @@ module.exports = () => __awaiter(void 0, void 0, void 0, function* () {
     }
     //MAIN
     const signature = hash(API_KEY.concat(API_SECRET, Math.round(Date.now() / 1000).toString()));
-    console.log(signature);
     const params = {
         headers: {
             "Content-Type": "application/json",

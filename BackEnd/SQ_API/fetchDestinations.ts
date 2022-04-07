@@ -18,7 +18,6 @@ module.exports = async () => {
   const signature = hash(
     API_KEY.concat(API_SECRET, Math.round(Date.now() / 1000).toString())
   );
-  console.log(signature);
 
   const params = {
     headers: {

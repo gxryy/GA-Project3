@@ -1,8 +1,8 @@
 const express = require("express");
-const { Router } = require("express");
 
 const router = express.Router();
 
+const fetchDestinations = require("../SQ_API/fetchDestinations");
 const Bookings = require("../model/bookings");
 const Flights = require("../model/flights");
 
@@ -45,6 +45,13 @@ router.get("/flights", async (req, res) => {
     } else {
       res.status(200).send({ msg: "Inserted to DB" });
     }
+  });
+});
+
+router.get("/getDestinations", (req, res) => {
+  fetchDestinations().then((response) => {
+    // to do the functions here
+    res.json(response);
   });
 });
 
