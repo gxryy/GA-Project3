@@ -18,10 +18,12 @@ app.use(express.urlencoded({ extended: false }));
 //FUNCTIONS
 const fetchDestinations = require("./fetchDestinations.js");
 
-const destinationData = fetchDestinations();
-console.log(destinationData);
+fetchDestinations().then((response: object) => {
+  // to do the functions here
+  console.log(response);
+});
 
-//DATA
+//DATAç
 
 //MAIN
 

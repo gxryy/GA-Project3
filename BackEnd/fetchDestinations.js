@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 module.exports = () => __awaiter(void 0, void 0, void 0, function* () {
     //DEPENDANCIES
     const axios = require("axios");
@@ -32,7 +33,7 @@ module.exports = () => __awaiter(void 0, void 0, void 0, function* () {
         },
         method: "POST",
     };
-    axios({
+    const data = yield axios({
         method: "post",
         url,
         headers: {
@@ -41,8 +42,6 @@ module.exports = () => __awaiter(void 0, void 0, void 0, function* () {
             "x-signature": signature,
             api_key: API_KEY,
         },
-    }).then((response) => {
-        console.log(`response received`);
-        return `response`;
     });
+    return data;
 });
