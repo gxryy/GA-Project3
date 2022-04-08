@@ -56,22 +56,83 @@ router.get("/getDestinations", (req, res) => {
     let destinations = [];
     for (element of response.data.destinationList) {
       console.log(element);
-      destinations.push({
-        airportCode: element.airportCode,
-        airportName: element.airportName,
-        cityName: element.cityName,
-        countryName: element.countryName,
-      });
+      destinations
+        .push({
+          airportCode: element.airportCode,
+          airportName: element.airportName,
+          cityName: element.cityName,
+          countryName: element.countryName,
+        })
+        .catch((error) => {
+          console.log(`API error`);
+          throw new Error(error);
+        });
     }
     res.json(destinations);
   });
 });
 
 router.get("/getFlights", (req, res) => {
-  fetchFlights().then((response) => {
-    // to do the functions here
-    res.json(response);
-  });
+  fetchFlights(req.body)
+    .then((APIresponse) => {
+      let endpointResponse = {};
+      // Parsing flight information
+      endpointResponse.airports = APIresponse.response.airports;
+      endpointResponse.flights = [];
+
+      for (let flights of APIresponse.response.flights) {
+        let flightResponse = {};
+        flightResponse.originAirportCode = flights.originAirportCode;
+        flightResponse.destinationAirportCode = flights.destinationAirportCode;
+        flightResponse.departureDate = flights.departureDate;
+        flightResponse.segments = [];
+
+        for (let segment of flights.segments) {
+          console.log(segment);
+          let segmentResponse = {};
+          segmentResponse.originAirportCode = segment.originAirportCode;
+          segmentResponse.destinationAirportCode =
+            segment.destinationAirportCode;
+          segmentResponse.departureDateTime = segment.departureDateTime;
+          segmentResponse.tripDuration = segment.tripDuration;
+          segmentResponse.fare = fareCalculator(
+            segment.tripDuration,
+            req.body.cabinClass
+          );
+          segmentResponse.legs = [];
+
+          for (let legs of segment.legs) {
+            let legResponse = {};
+            legResponse.aircraft = legs.aircraft;
+            legResponse.arrivalDateTime = legs.arrivalDateTime;
+            legResponse.arrivalTerminal = legs.arrivalTerminal;
+            legResponse.departureDateTime = legs.departureDateTime;
+            legResponse.departureTerminal = legs.departureTerminal;
+            legResponse.destinationAirportCode = legs.destinationAirportCode;
+            legResponse.originAirportCode = legs.originAirportCode;
+            legResponse.flightDuration = legs.flightDuration;
+            legResponse.flightNumber = legs.flightNumber;
+            legResponse.marketingAirline = legs.marketingAirline;
+            legResponse.layoverDuration = legs.layoverDuration;
+            legResponse.stops = legs.stops;
+
+            segmentResponse.legs.push(legResponse);
+          }
+          flightResponse.segments.push(segmentResponse);
+        }
+        endpointResponse.flights.push(flightResponse);
+      }
+
+      res.json(endpointResponse);
+    })
+    .catch((error) => {
+      console.log(`API error`);
+      throw new Error(error);
+    });
 });
+
+const fareCalculator = (tripDuration, cabinClass, stops) => {
+  return "420";
+};
 
 module.exports = router;

@@ -1,5 +1,12 @@
 export {};
-module.exports = async (details: object) => {
+module.exports = async (details: {
+  originAirportCode: String;
+  destinationAirportCode: String;
+  departureDate: String;
+  returnDate: String;
+  cabinClass: String;
+  adultCount: Number;
+}) => {
   //DEPENDANCIES
   const axios = require("axios");
 
@@ -12,19 +19,21 @@ module.exports = async (details: object) => {
 
   //MAIN
 
+  console.log(details);
+
   const data: String = JSON.stringify({
     clientUUID: "05b2fa78-a0f8-4357-97fe-d18506618c3f",
     request: {
       itineraryDetails: [
         {
-          originAirportCode: "SIN",
-          destinationAirportCode: "XRY",
-          departureDate: "2022-05-11",
-          returnDate: "2022-05-19",
+          originAirportCode: details.originAirportCode,
+          destinationAirportCode: details.destinationAirportCode,
+          departureDate: details.departureDate,
+          returnDate: details.returnDate,
         },
       ],
-      cabinClass: "Y",
-      adultCount: 1,
+      cabinClass: details.cabinClass,
+      adultCount: details.adultCount,
       childCount: 0,
       infantCount: 0,
     },

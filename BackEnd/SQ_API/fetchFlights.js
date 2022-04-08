@@ -17,19 +17,20 @@ module.exports = (details) => __awaiter(void 0, void 0, void 0, function* () {
     const url = "https://apigw.singaporeair.com/api/uat/v1/commercial/flightavailability/get";
     //FUNCTIONS
     //MAIN
+    console.log(details);
     const data = JSON.stringify({
         clientUUID: "05b2fa78-a0f8-4357-97fe-d18506618c3f",
         request: {
             itineraryDetails: [
                 {
-                    originAirportCode: "SIN",
-                    destinationAirportCode: "XRY",
-                    departureDate: "2022-05-11",
-                    returnDate: "2022-05-19",
+                    originAirportCode: details.originAirportCode,
+                    destinationAirportCode: details.destinationAirportCode,
+                    departureDate: details.departureDate,
+                    returnDate: details.returnDate,
                 },
             ],
-            cabinClass: "Y",
-            adultCount: 1,
+            cabinClass: details.cabinClass,
+            adultCount: details.adultCount,
             childCount: 0,
             infantCount: 0,
         },
