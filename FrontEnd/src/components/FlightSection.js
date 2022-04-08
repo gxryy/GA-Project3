@@ -1,10 +1,19 @@
 import React from "react";
-
-const FlightSection = (props) => {
-  console.log(props);
+import FlightCard from "./FlightCard";
+import { Box, Typography, Card, Button } from "@mui/material";
+const FlightSection = ({ flightDetails }) => {
+  //   console.log(flightDetails.segments);
   return (
     <div>
-      <h1>From {props.flightDetails.originAirportCode}</h1>
+      <Typography align="left" variant="h3">
+        From {flightDetails.originAirportCode} To{" "}
+        {flightDetails.destinationAirportCode}
+      </Typography>
+      <div>
+        {flightDetails.segments.map((segments) => (
+          <FlightCard flightSegments={segments} />
+        ))}
+      </div>
     </div>
   );
 };
