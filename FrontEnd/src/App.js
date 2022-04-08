@@ -6,6 +6,7 @@ import { cyan } from "@mui/material/colors";
 import { Route, Routes } from "react-router";
 import SearchFlight from "./components/SearchFlight";
 import Search from "./components/Search";
+import Test from "./components/Test";
 
 const theme = createTheme({
   palette: {
@@ -41,9 +42,10 @@ export default function App() {
             path="/seatSelection"
             element={<h1>seat Selection route</h1>}
           />
+          <Route path="/test" element={<Test />} />
         </Routes>
 
-        <Search/>
+        <Search />
       </div>
     </ThemeProvider>
   );

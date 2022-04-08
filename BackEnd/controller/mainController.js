@@ -50,6 +50,7 @@ router.get("/flights", async (req, res) => {
 });
 
 router.get("/getDestinations", (req, res) => {
+  console.log(`fetching destinations`);
   fetchDestinations().then((response) => {
     // Parsing destination information
     let destinations = [];
