@@ -29,10 +29,10 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<h1>ROOT route</h1>} />
-          <Route path="/search" element={<h1>Search route</h1>} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/results" element={<Results />} />
           <Route path="/manage" element={<h1>Manage Booking route</h1>} />
           <Route path="/signup" element={<h1>Signup route</h1>} />
-          <Route path="/results" element={<h1>Results route</h1>} />
           <Route path="/booking" element={<h1>Booking route</h1>} />
           <Route
             path="/bookingSummary"
@@ -45,8 +45,8 @@ export default function App() {
           <Route path="/test" element={<Test />} />
         </Routes>
 
-        {/* <Search /> */}
-        <Results />
+        {/* <Search />
+        <Results /> */}
       </div>
     </ThemeProvider>
   );

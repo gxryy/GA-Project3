@@ -56,17 +56,12 @@ router.get("/getDestinations", (req, res) => {
     let destinations = [];
     for (element of response.data.destinationList) {
       console.log(element);
-      destinations
-        .push({
-          airportCode: element.airportCode,
-          airportName: element.airportName,
-          cityName: element.cityName,
-          countryName: element.countryName,
-        })
-        .catch((error) => {
-          console.log(`API error`);
-          throw new Error(error);
-        });
+      destinations.push({
+        airportCode: element.airportCode,
+        airportName: element.airportName,
+        cityName: element.cityName,
+        countryName: element.countryName,
+      });
     }
     res.json(destinations);
   });
