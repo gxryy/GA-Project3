@@ -7,7 +7,7 @@ import { Route, Routes } from "react-router";
 import SearchFlight from "./components/SearchFlight";
 import Search from "./components/Search";
 import Test from "./components/Test";
-
+import Results from "./components/Results";
 const theme = createTheme({
   palette: {
     primary: cyan,
@@ -45,7 +45,8 @@ export default function App() {
           <Route path="/test" element={<Test />} />
         </Routes>
 
-        <Search />
+        {/* <Search /> */}
+        <Results />
       </div>
     </ThemeProvider>
   );
