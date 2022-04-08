@@ -1,0 +1,162 @@
+{
+  "airports": [
+    {
+      "airportCode": "MXP",
+      "airportName": "Malpensa",
+      "cityCode": "MIL",
+      "cityName": "Milan",
+      "countryCode": "IT",
+      "countryName": "Italy"
+    },
+    {
+      "airportCode": "SIN",
+      "airportName": "Changi",
+      "cityCode": "SIN",
+      "cityName": "Singapore",
+      "countryCode": "SG",
+      "countryName": "Singapore"
+    },
+    {
+      "airportCode": "BCN",
+      "airportName": "Barcelona El Prat Airport",
+      "cityCode": "BCN",
+      "cityName": "Barcelona",
+      "countryCode": "ES",
+      "countryName": "Spain"
+    },
+    {
+      "airportCode": "XRY",
+      "airportName": "Jerez",
+      "cityCode": "XRY",
+      "cityName": "Jerez",
+      "countryCode": "ES",
+      "countryName": "Spain"
+    }
+  ],
+  "flights": [
+    {
+      "originAirportCode": "SIN",
+      "destinationAirportCode": "XRY",
+      "departureDate": "2022-05-11",
+      "segments": [
+        {
+          "originAirportCode": "SIN",
+          "destinationAirportCode": "XRY",
+          "departureDateTime": "2022-05-11 23:30:00",
+          "tripDuration": 77100,
+          "fare": "420",
+          "legs": [
+            {
+              "aircraft": {
+                "code": "359",
+                "name": "Airbus A350-900"
+              },
+              "arrivalDateTime": "2022-05-12 08:45:00",
+              "arrivalTerminal": "1",
+              "departureDateTime": "2022-05-11 23:30:00",
+              "departureTerminal": "3",
+              "destinationAirportCode": "BCN",
+              "originAirportCode": "SIN",
+              "flightDuration": 54900,
+              "flightNumber": "378",
+              "marketingAirline": {
+                "code": "SQ",
+                "name": "Singapore Airlines"
+              },
+              "layoverDuration": 15600,
+              "stops": [
+                {
+                  "departureDateTime": "2022-05-12 07:10:00",
+                  "arrivalDateTime": "2022-05-12 06:10:00",
+                  "airportCode": "MXP",
+                  "layoverDuration": 3600
+                }
+              ]
+            },
+            {
+              "aircraft": {
+                "code": "32A",
+                "name": "Airbus A320"
+              },
+              "arrivalDateTime": "2022-05-12 14:55:00",
+              "departureDateTime": "2022-05-12 13:05:00",
+              "departureTerminal": "1",
+              "destinationAirportCode": "XRY",
+              "originAirportCode": "BCN",
+              "flightDuration": 6600,
+              "flightNumber": "2286",
+              "marketingAirline": {
+                "code": "VY",
+                "name": "Vueling Airlines"
+              },
+              "layoverDuration": 0,
+              "stops": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "originAirportCode": "XRY",
+      "destinationAirportCode": "SIN",
+      "departureDate": "2022-05-19",
+      "segments": [
+        {
+          "originAirportCode": "XRY",
+          "destinationAirportCode": "SIN",
+          "departureDateTime": "2022-05-19 15:30:00",
+          "tripDuration": 120600,
+          "fare": "420",
+          "legs": [
+            {
+              "aircraft": {
+                "code": "32A",
+                "name": "Airbus A320"
+              },
+              "arrivalDateTime": "2022-05-19 17:15:00",
+              "arrivalTerminal": "1",
+              "departureDateTime": "2022-05-19 15:30:00",
+              "destinationAirportCode": "BCN",
+              "originAirportCode": "XRY",
+              "flightDuration": 6300,
+              "flightNumber": "2287",
+              "marketingAirline": {
+                "code": "VY",
+                "name": "Vueling Airlines"
+              },
+              "layoverDuration": 60900,
+              "stops": []
+            },
+            {
+              "aircraft": {
+                "code": "359",
+                "name": "Airbus A350-900"
+              },
+              "arrivalDateTime": "2022-05-21 07:00:00",
+              "arrivalTerminal": "0",
+              "departureDateTime": "2022-05-20 10:10:00",
+              "departureTerminal": "1",
+              "destinationAirportCode": "SIN",
+              "originAirportCode": "BCN",
+              "flightDuration": 53400,
+              "flightNumber": "377",
+              "marketingAirline": {
+                "code": "SQ",
+                "name": "Singapore Airlines"
+              },
+              "layoverDuration": 0,
+              "stops": [
+                {
+                  "departureDateTime": "2022-05-20 13:00:00",
+                  "arrivalDateTime": "2022-05-20 11:50:00",
+                  "airportCode": "MXP",
+                  "layoverDuration": 4200
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
