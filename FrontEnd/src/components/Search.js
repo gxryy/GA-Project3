@@ -79,7 +79,7 @@ const Search = () => {
               )}
               value={paxFromValue}
               onChange={(_event, newTeam) => {
-                setSelectedTeam(newTeam);
+                // setSelectedTeam(newTeam);
               }}
             />
             <FormControl />
