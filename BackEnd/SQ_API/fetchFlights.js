@@ -23,9 +23,9 @@ module.exports = (details) => __awaiter(void 0, void 0, void 0, function* () {
             itineraryDetails: [
                 {
                     originAirportCode: "SIN",
-                    destinationAirportCode: "BKK",
-                    departureDate: "2022-11-01",
-                    returnDate: "2022-11-10",
+                    destinationAirportCode: "XRY",
+                    departureDate: "2022-05-11",
+                    returnDate: "2022-05-19",
                 },
             ],
             cabinClass: "Y",
