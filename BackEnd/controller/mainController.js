@@ -150,6 +150,28 @@ router.get("/getFlights", (req, res) => {
     });
 });
 
+router.get("/getSeats", (req, res) => {
+  console.log(`in getseats backend`);
+  console.log(req.body.flightNumber);
+  console.log(req.body.departureDateTime);
+  Flights.findOne(
+    {
+      $and: [
+        { flightNumber: req.body.flightNumber },
+        { departureDateTime: req.body.departureDateTime },
+      ],
+    },
+    (err, data) => {
+      if (err) {
+        console.log(err);
+        res.json(`ERROR`);
+      } else {
+        res.json(data.seatMap);
+      }
+    }
+  );
+});
+
 const fareCalculator = (tripDuration, cabinClass, legs) => {
   //
   let hrs = tripDuration / 3600;
