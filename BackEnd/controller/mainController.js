@@ -34,11 +34,25 @@ router.get("/bookings", async (req, res) => {
 // Flights
 router.get("/flights", async (req, res) => {
   const createFlights = new Flights({
-    flightnumber: 714,
-    departuredate: "2022-04-10",
-    origin: "Singapore",
-    destination: "BangKok",
-    numofseats: 2,
+    aircraft: {
+      code: "359",
+      name: "Airbus A350-900",
+    },
+    arrivalDateTime: "2022-06-01 14:20:00",
+    departureDateTime: "2022-06-01 12:50:00",
+    departureTerminal: "3",
+    destinationAirportCode: "BKK",
+    originAirportCode: "SIN",
+    flightDuration: 9000,
+    flightNumber: "710",
+    marketingAirline: {
+      code: "SQ",
+      name: "Singapore Airlines",
+    },
+    layoverDuration: 0,
+    stops: [],
+
+    seatMap: seatMapGenerator(),
   });
   await createFlights.save((err, data) => {
     if (err) {
@@ -157,6 +171,39 @@ const fareCalculator = (tripDuration, cabinClass, legs) => {
   fare = Math.floor(baseFare * legFactor * classFactor * 10) / 10;
 
   return fare;
+};
+
+const seatMapGenerator = () => {
+  let seatmap = [];
+  let JclassCol = 4;
+  let JclassOccupancyRate = 0.18;
+  let YclassCol = 9;
+  let YclassOccupancyRate = 0.2;
+  let col = ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K"];
+  // seat for J class
+  for (let i = 1; i <= 10; i++) {
+    for (let j = 0; j < JclassCol; j++) {
+      let seat = {
+        seat: `${i + col[j]}`,
+        cabinClass: "J",
+        isVacant: Math.random() > JclassOccupancyRate ? true : false,
+      };
+      seatmap.push(seat);
+    }
+  }
+  // seat for Y class
+  for (let i = 11; i <= 35; i++) {
+    for (let j = 0; j < YclassCol; j++) {
+      let seat = {
+        seat: `${i + col[j]}`,
+        cabinClass: "Y",
+        isVacant: Math.random() > YclassOccupancyRate ? true : false,
+      };
+      seatmap.push(seat);
+    }
+  }
+
+  return seatmap;
 };
 
 module.exports = router;
