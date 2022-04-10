@@ -51,7 +51,6 @@ router.get("/flights", async (req, res) => {
     },
     layoverDuration: 0,
     stops: [],
-
     seatMap: seatMapGenerator(),
   });
   await createFlights.save((err, data) => {
@@ -69,7 +68,6 @@ router.get("/getDestinations", (req, res) => {
     // Parsing destination information
     let destinations = [];
     for (element of response.data.destinationList) {
-      console.log(element);
       destinations.push({
         airportCode: element.airportCode,
         airportName: element.airportName,
@@ -81,7 +79,7 @@ router.get("/getDestinations", (req, res) => {
   });
 });
 
-router.get("/getFlights", (req, res) => {
+router.post("/getFlights", (req, res) => {
   fetchFlights(req.body)
     .then((APIresponse) => {
       console.log(`debug`);
@@ -150,10 +148,9 @@ router.get("/getFlights", (req, res) => {
     });
 });
 
-router.get("/getSeats", (req, res) => {
+router.post("/getSeats", (req, res) => {
   console.log(`in getseats backend`);
-  console.log(req.body.flightNumber);
-  console.log(req.body.departureDateTime);
+  console.log(req.body);
   Flights.findOne(
     {
       $and: [
@@ -166,6 +163,7 @@ router.get("/getSeats", (req, res) => {
         console.log(err);
         res.json(`ERROR`);
       } else {
+        console.log(data);
         res.json(data.seatMap);
       }
     }
@@ -205,10 +203,14 @@ const seatMapGenerator = () => {
   // seat for J class
   for (let i = 1; i <= 10; i++) {
     for (let j = 0; j < JclassCol; j++) {
+      let isVacant = Math.random() > JclassOccupancyRate ? true : false;
       let seat = {
         seat: `${i + col[j]}`,
         cabinClass: "J",
-        isVacant: Math.random() > JclassOccupancyRate ? true : false,
+        row: i,
+        column: col[j],
+        isVacant,
+        source: isVacant ? "" : "default",
       };
       seatmap.push(seat);
     }
@@ -216,10 +218,14 @@ const seatMapGenerator = () => {
   // seat for Y class
   for (let i = 11; i <= 35; i++) {
     for (let j = 0; j < YclassCol; j++) {
+      let isVacant = Math.random() > YclassOccupancyRate ? true : false;
       let seat = {
         seat: `${i + col[j]}`,
         cabinClass: "Y",
-        isVacant: Math.random() > YclassOccupancyRate ? true : false,
+        row: i,
+        column: col[j],
+        isVacant,
+        source: isVacant ? "" : "default",
       };
       seatmap.push(seat);
     }
