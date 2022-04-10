@@ -9,6 +9,7 @@ import Test from "./components/Test";
 import Results from "./components/Results";
 import ParticularsForm from "./components/ParticularsForm";
 import PassengerForm from "./components/PassengerForm";
+import SeatSelector from "./components/SeatSelector";
 
 const theme = createTheme({
   palette: {
@@ -35,6 +36,8 @@ export default function App() {
           <Route path="/results" element={<Results />} />
           <Route path="/passengerForm" element={<PassengerForm />} />
           <Route path="/ParticularsForm" element={<ParticularsForm />} />
+          <Route path="/SeatSelector" element={<SeatSelector />} />
+
           <Route path="/manage" element={<h1>Manage Booking route</h1>} />
           <Route path="/signup" element={<h1>Signup route</h1>} />
           <Route path="/booking" element={<h1>Booking route</h1>} />
