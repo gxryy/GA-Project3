@@ -12,18 +12,20 @@ const FlightSection = ({ flightDetails, flightIndex, setSelectedFlight }) => {
         {flightDetails.destinationAirportCode}
       </Typography>
       <div>
-        {flightDetails.segments.map((segments) => {
-          let id = nanoid();
-          return (
-            <FlightCard
-              flightSegments={segments}
-              key={id}
-              id={id}
-              setSelectedFlight={setSelectedFlight}
-              flightIndex={flightIndex}
-            />
-          );
-        })}
+        {flightDetails.segments
+          .map((segments) => {
+            let id = nanoid();
+            return (
+              <FlightCard
+                flightSegments={segments}
+                key={id}
+                id={id}
+                setSelectedFlight={setSelectedFlight}
+                flightIndex={flightIndex}
+              />
+            );
+          })
+          .filter(Boolean)}
       </div>
     </div>
   );

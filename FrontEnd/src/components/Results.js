@@ -14,18 +14,24 @@ const Results = () => {
   }, [selectedFlight]);
 
   // KL test
-  const flightList = MockKL.flights.map((details, flightIndex) => (
-    <FlightSection
-      flightDetails={details}
-      flightIndex={flightIndex}
-      setSelectedFlight={setSelectedFlight}
-    ></FlightSection>
-  ));
+  // const flightList = MockKL.flights.map((details, flightIndex) => (
+  //   <FlightSection
+  //     flightDetails={details}
+  //     flightIndex={flightIndex}
+  //     setSelectedFlight={setSelectedFlight}
+  //   ></FlightSection>
+  // ));
 
   // XRY test
-  // const flightList = MockXRY.flights.map((details) => (
-  //   <FlightSection flightDetails={details}></FlightSection>
-  // ));
+  const flightList = MockXRY.flights
+    .map((details, flightIndex) => (
+      <FlightSection
+        flightDetails={details}
+        flightIndex={flightIndex}
+        setSelectedFlight={setSelectedFlight}
+      ></FlightSection>
+    ))
+    .filter(Boolean);
   return (
     <div>
       {flightList}
