@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { cyan } from "@mui/material/colors";
@@ -8,8 +8,9 @@ import Search from "./components/Search";
 import Test from "./components/Test";
 import Results from "./components/Results";
 import ParticularsForm from "./components/ParticularsForm";
-import PassengerForm from "./components/PassengerForm";
+import PassengerDetails from "./components/PassengerDetails";
 import SeatSelector from "./components/SeatSelector";
+import BookingContext from "./components/context/BookingContext";
 
 const theme = createTheme({
   palette: {
@@ -24,23 +25,42 @@ const theme = createTheme({
 });
 
 export default function App() {
+  const [booking, setBooking] = useState({
+    queryParams: {
+      originAirportCode: "SIN",
+      destinationAirportCode: "XRY",
+      departureDate: "2022-05-11",
+      returnDate: "2022-05-19",
+      cabinClass: "Y",
+      adultCount: 2,
+    },
+    selectedFlight: [],
+    passengerInfo: [],
+    seatSelection: [],
+  });
+
+  useEffect(() => {
+    console.log(booking);
+  }, [booking]);
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <NavBar></NavBar>
-        {/* <h1>test</h1> */}
-
+        <BookingContext.Provider value={{ booking, setBooking }}>
+          <Routes>
+            <Route path="/" element={<Search />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/passengerDetails" element={<PassengerDetails />} />
+            <Route path="/SeatSelector" element={<SeatSelector />} />
+          </Routes>
+        </BookingContext.Provider>
         <Routes>
-          <Route path="/" element={<Search />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/results" element={<Results />} />
-          <Route path="/passengerForm" element={<PassengerForm />} />
-          <Route path="/ParticularsForm" element={<ParticularsForm />} />
-          <Route path="/SeatSelector" element={<SeatSelector />} />
-
           <Route path="/manage" element={<h1>Manage Booking route</h1>} />
           <Route path="/signup" element={<h1>Signup route</h1>} />
-          <Route path="/booking" element={<h1>Booking route</h1>} />
+          <Route path="/booking" element={<h1>Booking route</h1>} />{" "}
+          <Route path="/ParticularsForm" element={<ParticularsForm />} />
           <Route
             path="/bookingSummary"
             element={<h1>bookingSummary route</h1>}

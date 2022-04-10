@@ -136,7 +136,9 @@ const SeatSelector = () => {
     console.log(event.target.innerText);
     setSeatMap((prev) => {
       let newSeatMap = JSON.parse(JSON.stringify(prev));
-      let index = prev.findIndex((seat) => seat.seat == event.target.innerText);
+      let index = prev.findIndex(
+        (seat) => seat.seat === event.target.innerText
+      );
       newSeatMap[index].isVacant = false;
       newSeatMap[index].source = "selected";
 
@@ -183,7 +185,7 @@ const SeatSelector = () => {
         <Typography variant="h4">{"SQ" + propsflightNumber}</Typography>
       </Container>
       <Container>
-        {propscabinClass == "J" ? JSeatDisplay : YSeatDisplay}
+        {propscabinClass === "J" ? JSeatDisplay : YSeatDisplay}
       </Container>
     </div>
   );
