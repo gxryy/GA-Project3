@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import FlightCard from "./FlightCard";
 import { Box, Typography, Card, Button } from "@mui/material";
-const FlightSection = ({ flightDetails }) => {
+import { nanoid } from "nanoid";
+
+const FlightSection = ({ flightDetails, flightIndex, setSelectedFlight }) => {
   //   console.log(flightDetails.segments);
   return (
     <div>
@@ -10,9 +12,18 @@ const FlightSection = ({ flightDetails }) => {
         {flightDetails.destinationAirportCode}
       </Typography>
       <div>
-        {flightDetails.segments.map((segments) => (
-          <FlightCard flightSegments={segments} />
-        ))}
+        {flightDetails.segments.map((segments) => {
+          let id = nanoid();
+          return (
+            <FlightCard
+              flightSegments={segments}
+              key={id}
+              id={id}
+              setSelectedFlight={setSelectedFlight}
+              flightIndex={flightIndex}
+            />
+          );
+        })}
       </div>
     </div>
   );

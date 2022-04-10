@@ -1,9 +1,17 @@
 import React from "react";
-import { Box, Typography, Card, Grid } from "@mui/material";
+import { Box, Typography, Card, Grid, Button } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 
-const FlightCard = ({ flightSegments }) => {
+const FlightCard = ({ flightSegments, id, setSelectedFlight, flightIndex }) => {
+  const clickHandler = () => {
+    setSelectedFlight((prev) => {
+      let updated = JSON.parse(JSON.stringify(prev));
+      updated[flightIndex] = flightSegments;
+      return updated;
+    });
+  };
+
   // console.log(flightSegments);
   return (
     <div className="resultspage">
@@ -45,6 +53,7 @@ const FlightCard = ({ flightSegments }) => {
               aircraft name: {flightSegments.legs[0].aircraft.name}
             </Typography>
           </Grid>
+          <Button onClick={clickHandler}>Select</Button>
         </Grid>
       </Card>
     </div>
