@@ -7,7 +7,13 @@ import MockXRY from "../mockResponse/XRY.json";
 import FlightCard from "./FlightCard";
 import FlightSection from "./FlightSection";
 const Results = () => {
-  const flightList = MockKL.flights.map((details) => (
+  // KL test
+  // const flightList = MockKL.flights.map((details) => (
+  //   <FlightSection flightDetails={details}></FlightSection>
+  // ));
+
+  // XRY test
+  const flightList = MockXRY.flights.map((details) => (
     <FlightSection flightDetails={details}></FlightSection>
   ));
   return <div>{flightList}</div>;
