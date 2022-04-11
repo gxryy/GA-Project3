@@ -11,9 +11,11 @@ const SeatDisplay = (props) => {
   // let propsnumberOfPax = 3;
 
   // States for seatMap
-  const [seatMap, setSeatMap] = useState([]);
+  // const [seatMap, setSeatMap] = useState([]);
   const [JSeatDisplay, setJSeatDisplay] = useState(<></>);
   const [YSeatDisplay, setYSeatDisplay] = useState(<></>);
+  // console.log(props);
+  const seatMap = props.seatMap;
 
   // Calls the BE for seatmap
   useEffect(async () => {
@@ -31,7 +33,7 @@ const SeatDisplay = (props) => {
     };
     axios(config)
       .then((response) => {
-        setSeatMap(response.data);
+        // setSeatMap(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -42,113 +44,107 @@ const SeatDisplay = (props) => {
     // do create render when there is seatMap
     let JSeatArray = [];
     let YSeatArray = [];
-
-    for (let seat of seatMap) {
-      seat.cabinClass == "J" ? JSeatArray.push(seat) : YSeatArray.push(seat);
-    }
-
-    let Jdisplay = [
-      <>
-        <Typography variant="h6">BUSINESS</Typography>
-      </>,
-    ];
-    let Ydisplay = [
-      <>
-        <Typography variant="h6">ECONOMY</Typography>
-      </>,
-    ];
-
-    for (let i = 0; i < JSeatArray.length; i += 4) {
-      let column = [];
-      let row = (
-        <Grid container spacing={0} justifyContent="center" key={nanoid()}>
-          {column}
-        </Grid>
-      );
-
-      for (let j = 0; j < 4; j++) {
-        if (j == 1 || j == 3) {
-          column.push(<Box width={"40px"} key={nanoid()}></Box>);
-        }
-        column.push(
-          <Grid item key={nanoid()}>
-            <Box
-              sx={
-                JSeatArray[i + j].isVacant
-                  ? { ...enabled }
-                  : JSeatArray[i + j].source == "selected"
-                  ? { ...selected }
-                  : { ...disabled }
-              }
-              onClick={clickHandler}
-              display="flex"
-              justifyContent={"space-around"}
-            >
-              <Typography variant="h6">{JSeatArray[i + j].seat}</Typography>
-            </Box>
-          </Grid>
-        );
+    // console.log(props);
+    if (seatMap) {
+      for (let seat of seatMap) {
+        seat.cabinClass == "J" ? JSeatArray.push(seat) : YSeatArray.push(seat);
       }
 
-      Jdisplay.push(row);
-    }
-
-    for (let i = 0; i < YSeatArray.length; i += 9) {
-      let column = [];
-      let row = (
-        <Grid
-          container
-          spacing={0}
-          justifyContent="center"
-          wrap="nowrap"
-          key={nanoid()}
-        >
-          {column}
-        </Grid>
-      );
-
-      for (let j = 0; j < 9; j++) {
-        if (j == 3 || j == 6) {
-          column.push(<Box width={"40px"} key={nanoid()}></Box>);
-        }
-        column.push(
-          <Grid item key={nanoid()}>
-            <Box
-              sx={
-                YSeatArray[i + j].isVacant
-                  ? { ...enabled }
-                  : YSeatArray[i + j].source == "selected"
-                  ? { ...selected }
-                  : { ...disabled }
-              }
-              onClick={clickHandler}
-              display="flex"
-              justifyContent={"center"}
-            >
-              <Typography variant="h6">{YSeatArray[i + j].seat}</Typography>
-            </Box>
+      let Jdisplay = [
+        <>
+          <Typography variant="h3">BUSINESS</Typography>
+        </>,
+      ];
+      let Ydisplay = [
+        <>
+          <Typography variant="h3">ECONOMY</Typography>
+        </>,
+      ];
+      for (let i = 0; i < JSeatArray.length; i += 4) {
+        let column = [];
+        let row = (
+          <Grid container spacing={0} justifyContent="center" key={nanoid()}>
+            {column}
           </Grid>
         );
+
+        for (let j = 0; j < 4; j++) {
+          if (j == 1 || j == 3) {
+            column.push(<Box width={"40px"} key={nanoid()}></Box>);
+          }
+          column.push(
+            <Grid item key={nanoid()}>
+              <Box
+                sx={
+                  JSeatArray[i + j].isVacant
+                    ? { ...enabled }
+                    : JSeatArray[i + j].source == "selected"
+                    ? { ...selected }
+                    : { ...disabled }
+                }
+                onClick={clickHandler}
+                display="flex"
+                justifyContent={"space-around"}
+              >
+                <Typography variant="h6">{JSeatArray[i + j].seat}</Typography>
+              </Box>
+            </Grid>
+          );
+        }
+
+        Jdisplay.push(row);
       }
 
-      Ydisplay.push(row);
-    }
+      for (let i = 0; i < YSeatArray.length; i += 9) {
+        let column = [];
+        let row = (
+          <Grid
+            container
+            spacing={0}
+            justifyContent="center"
+            wrap="nowrap"
+            key={nanoid()}
+          >
+            {column}
+          </Grid>
+        );
 
-    setJSeatDisplay(Jdisplay);
-    setYSeatDisplay(Ydisplay);
+        for (let j = 0; j < 9; j++) {
+          if (j == 3 || j == 6) {
+            column.push(<Box width={"40px"} key={nanoid()}></Box>);
+          }
+          column.push(
+            <Grid item key={nanoid()}>
+              <Box
+                sx={
+                  YSeatArray[i + j].isVacant
+                    ? { ...enabled }
+                    : YSeatArray[i + j].source == "selected"
+                    ? { ...selected }
+                    : { ...disabled }
+                }
+                onClick={clickHandler}
+                display="flex"
+                justifyContent={"center"}
+              >
+                <Typography variant="h6">{YSeatArray[i + j].seat}</Typography>
+              </Box>
+            </Grid>
+          );
+        }
+
+        Ydisplay.push(row);
+      }
+
+      setJSeatDisplay(Jdisplay);
+      setYSeatDisplay(Ydisplay);
+    }
   }, [seatMap]);
 
   const clickHandler = (event) => {
-    console.log(event.target.innerText);
-    setSeatMap((prev) => {
-      let newSeatMap = JSON.parse(JSON.stringify(prev));
-      let index = prev.findIndex(
-        (seat) => seat.seat === event.target.innerText
-      );
-      newSeatMap[index].isVacant = false;
-      newSeatMap[index].source = "selected";
-
-      return newSeatMap;
+    props.seatMap.map((seat) => {
+      if (seat.seat == event.target.innerText && seat.isVacant)
+        props.seatSelection(event.target.innerText);
     });
   };
 

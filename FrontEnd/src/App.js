@@ -13,6 +13,8 @@ import SeatDisplay from "./components/SeatDisplay";
 import BookingContext from "./components/context/BookingContext";
 import SeatSelector from "./components/SeatSelector";
 import Summary from "./components/Summary";
+// import Summary from "./components/Summary";
+
 const theme = createTheme({
   palette: {
     primary: cyan,
@@ -82,6 +84,7 @@ export default function App() {
           <Route path="/booking" element={<h1>Booking route</h1>} />{" "}
           <Route path="/ParticularsForm" element={<ParticularsForm />} />{" "}
           <Route path="/SeatDisplay" element={<SeatDisplay />} />
+          {/* <Route path="/summary" element={<Summary />} /> */}
           <Route
             path="/bookingSummary"
             element={<h1>bookingSummary route</h1>}
