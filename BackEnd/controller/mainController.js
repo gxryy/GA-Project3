@@ -164,7 +164,8 @@ router.post("/getSeats", (req, res) => {
         res.json(`ERROR`);
       } else {
         console.log(data);
-        res.json(data.seatMap);
+        if (data) res.json(data.seatMap);
+        else res.json(seatMapGenerator());
       }
     }
   );
