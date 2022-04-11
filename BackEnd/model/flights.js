@@ -2,11 +2,17 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const flightSchema = new Schema({
-  flightnumber: Number,
-  departuredate: Date, // Date format is 'yyyy-mm-dd'
-  origin: String,
-  destination: String,
-  numofseats: Number,
+  flightNumber: Number,
+  departureDateTime: String, // Date format is "2022-05-11 23:30:00"
+  arrivalDateTime: String,
+  destinationAirportCode: String,
+  originAirportCode: String,
+  aircraft: { code: String, name: String },
+  flightDuration: Number, // number in seconds
+  marketingAirline: { code: String, name: String },
+  layoverDuration: Number, // in seconds
+  stops: Array,
+  seatMap: Array,
 });
 
 const Flights = mongoose.model("Flights", flightSchema);

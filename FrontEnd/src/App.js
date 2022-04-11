@@ -1,5 +1,4 @@
 import React from "react";
-
 import NavBar from "./components/NavBar";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { cyan } from "@mui/material/colors";
@@ -8,6 +7,10 @@ import SearchFlight from "./components/SearchFlight";
 import Search from "./components/Search";
 import Test from "./components/Test";
 import Results from "./components/Results";
+import ParticularsForm from "./components/ParticularsForm";
+import PassengerForm from "./components/PassengerForm";
+import SeatSelector from "./components/SeatSelector";
+
 const theme = createTheme({
   palette: {
     primary: cyan,
@@ -28,9 +31,13 @@ export default function App() {
         {/* <h1>test</h1> */}
 
         <Routes>
-          <Route path="/" element={<h1>ROOT route</h1>} />
+          <Route path="/" element={<Search />} />
           <Route path="/search" element={<Search />} />
           <Route path="/results" element={<Results />} />
+          <Route path="/passengerForm" element={<PassengerForm />} />
+          <Route path="/ParticularsForm" element={<ParticularsForm />} />
+          <Route path="/SeatSelector" element={<SeatSelector />} />
+
           <Route path="/manage" element={<h1>Manage Booking route</h1>} />
           <Route path="/signup" element={<h1>Signup route</h1>} />
           <Route path="/booking" element={<h1>Booking route</h1>} />
