@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Card,
   Button,
@@ -10,39 +12,51 @@ import {
   Autocomplete,
   MenuItem,
 } from "@mui/material";
-// import "@date-io/date-fns";
-// import { Grid } from "@mui/material";
-// import DateFnsUtils from "@date-io/date-fns/build/date-fns-utils";
-// import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-// import { KeyboardDatePicker } from "@material-ui/pickers";
+import BookingContext from "./context/BookingContext";
 
 const Search = () => {
+  const navigate = useNavigate();
+  const bookingContext = useContext(BookingContext);
+
   // USESTATES
   const [paxClass, setPaxClass] = useState("");
   const [paxNum, setPaxNum] = useState("");
   const [paxFrom, setPaxFrom] = useState([]);
-  const [paxFromValue, setPaxFromValue] = useState(null);
+  const [FromValue, setFromValue] = useState(null);
   const [destinationValue, setDestinationValue] = useState(null);
-  const [departDateValue, setdepartDateValue] = useState(
-    new Date("2022-05-05")
-  );
-
-  console.log(paxFromValue); // selected Departure Destination
-  console.log(destinationValue); //selectedDestinationValue
-  console.log(departDateValue); // selected Depart
+  const [departDateValue, setdepartDateValue] = useState("");
+  const [returnDateValue, setReturnDateValue] = useState("");
 
   //HANDLECHANGE
   const handleChangePax = (event) => {
     setPaxNum(event.target.value);
-    console.log(event.target.value);
   };
   const handleChangeClass = (event) => {
     setPaxClass(event.target.value);
-    console.log(event.target.value);
   };
 
-  const handleChangeDepartDate = (date) => {
-    setdepartDateValue(date);
+  const handleChangeDepartDate = (event) => {
+    let departDate = event.target.value;
+    setdepartDateValue(departDate);
+  };
+
+  const handleChangeReturnDate = (e) => {
+    let returnDate = e.target.value;
+    setReturnDateValue(returnDate);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    bookingContext.booking.queryParams = {
+      originAirportCode: FromValue,
+      destinationAirportCode: destinationValue,
+      departureDate: departDateValue,
+      returnDate: returnDateValue,
+      cabinClass: paxClass,
+      adultCount: paxNum,
+    };
+    console.log(bookingContext.booking.queryParams);
+    navigate("/results");
   };
 
   //FETCH DATA GETDESTINATIONS
@@ -67,30 +81,6 @@ const Search = () => {
     <>
       <Card sx={{ minWidth: 275 }}>
         <div>
-          {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space around">
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker"
-                label="Date Picker"
-                value={departDateValue}
-                onChange={handleChangeDepartDate}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider> */}
-
-          {/* <CardMedia
-        component="img"
-        height="500"
-        image="https://photos.mandarinoriental.com/is/image/MandarinOriental/kuala-lumpur-2013-exterior-dusk-2?wid=2880&hei=1280&fmt=jpeg&qlt=75,0&op_sharpen=0&resMode=sharp2&op_usm=0,0,0,0&iccEmbed=0&printRes=72&fit=crop"
-      /> */}
-
           {/* FROM */}
           <FormControl sx={{ m: 2, minWidth: 100 }}>
             <Autocomplete
@@ -100,10 +90,9 @@ const Search = () => {
                 <TextField {...text} label="From" variant="outlined" />
               )}
               style={{ width: 200 }}
-              value={paxFromValue}
-<<<<<<< HEAD
+              value={FromValue}
               onChange={(_event, newValue) => {
-                setPaxFromValue(newValue);
+                setFromValue(newValue);
               }}
             />
           </FormControl>
@@ -119,10 +108,6 @@ const Search = () => {
               value={destinationValue}
               onChange={(_event, newDestination) => {
                 setDestinationValue(newDestination);
-=======
-              onChange={(_event, newTeam) => {
-                // setSelectedTeam(newTeam);
->>>>>>> 0542355e770bbd6c34ec152989707be531234a2a
               }}
             />
           </FormControl>
@@ -147,6 +132,7 @@ const Search = () => {
               InputLabelProps={{
                 shrink: true,
               }}
+              onChange={handleChangeReturnDate}
             />
           </FormControl>
           <br></br>
@@ -164,7 +150,6 @@ const Search = () => {
               <MenuItem value=""></MenuItem>
               <MenuItem value="Y">Economy</MenuItem>
               <MenuItem value="J">Business</MenuItem>
-              <MenuItem value="F">First Class</MenuItem>
             </Select>
           </FormControl>
           {/*  NUM OF PAX */}
@@ -187,7 +172,9 @@ const Search = () => {
             </Select>
           </FormControl>
 
-          <Button variant="contained">SEARCH</Button>
+          <Button variant="contained" onClick={handleSubmit}>
+            SEARCH
+          </Button>
         </div>
       </Card>
     </>
