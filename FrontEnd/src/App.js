@@ -28,7 +28,7 @@ export default function App() {
   const [booking, setBooking] = useState({
     queryParams: {
       originAirportCode: "SIN",
-      destinationAirportCode: "XRY",
+      destinationAirportCode: "KUL",
       departureDate: "2022-05-11",
       returnDate: "2022-05-19",
       cabinClass: "Y",
@@ -37,6 +37,7 @@ export default function App() {
     selectedFlight: [],
     passengerInfo: [],
     seatSelection: [],
+    airports: [],
   });
 
   useEffect(() => {

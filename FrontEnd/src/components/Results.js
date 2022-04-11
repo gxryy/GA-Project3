@@ -41,6 +41,8 @@ const Results = () => {
   }, []);
 
   useEffect(() => {
+    console.log(apiData);
+    bookingContext.booking.airports = apiData.airports;
     let display = apiData.flights.map((details, flightIndex) => (
       <FlightSection
         flightDetails={details}

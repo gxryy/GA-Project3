@@ -82,6 +82,7 @@ router.get("/getDestinations", (req, res) => {
 router.post("/getFlights", (req, res) => {
   fetchFlights(req.body)
     .then((APIresponse) => {
+      console.log(APIresponse);
       console.log(`debug`);
       console.log(APIresponse.response);
       if (

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import FlightStop from "./FlightStop";
 import FlightStop2 from "./FlightStop2";
+
 // import FlightStop3 from "./FlightStop3";
-const FlightLeg = ({ flightLegs }) => {
+const FlightLeg2 = ({ flightLegs }) => {
   useEffect(() => {
     // console.log(flightLegs);
   }, []);
@@ -12,8 +12,7 @@ const FlightLeg = ({ flightLegs }) => {
       {flightLegs.stops.length > 0
         ? flightLegs.stops.map((stops) => {
             return [
-              <FlightStop flightStops={stops} />,
-              // <FlightStop2 flightStops={stops} />,
+              <FlightStop2 flightStops={stops} />,
               // <FlightStop3 flightStops={stops} />,
             ];
           })
@@ -22,4 +21,4 @@ const FlightLeg = ({ flightLegs }) => {
   );
 };
 
-export default FlightLeg;
+export default FlightLeg2;
