@@ -101,6 +101,7 @@ const Search = () => {
               )}
               style={{ width: 200 }}
               value={paxFromValue}
+<<<<<<< HEAD
               onChange={(_event, newValue) => {
                 setPaxFromValue(newValue);
               }}
@@ -118,6 +119,10 @@ const Search = () => {
               value={destinationValue}
               onChange={(_event, newDestination) => {
                 setDestinationValue(newDestination);
+=======
+              onChange={(_event, newTeam) => {
+                // setSelectedTeam(newTeam);
+>>>>>>> 0542355e770bbd6c34ec152989707be531234a2a
               }}
             />
           </FormControl>
