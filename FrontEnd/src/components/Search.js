@@ -71,10 +71,18 @@ const Search = () => {
 
   // LIST OF ALL AIRPORT CODES
   const allAirportCode = paxFrom.map((data, index) => {
-    return data.airportName + " " + (data.airportCode) +" "+ data.cityName +" "+data.countryName ;
+    return (
+      data.airportName +
+      " " +
+      data.airportCode +
+      " " +
+      data.cityName +
+      " " +
+      data.countryName
+    );
   });
   console.log(allAirportCode);
-console.log(paxFrom)
+  console.log(paxFrom);
   // disable past dates
   // const yesterday = new Date().subtract(1, 'day');
   // const disablePastDt = current => {
@@ -137,7 +145,10 @@ console.log(paxFrom)
                 id="outlined-input"
                 label=" Depart Date"
                 type="date"
-                // minDate={new Date()}
+                // minDate={"2022-04-11"}
+                InputProps={{
+                  inputProps: { min: "2022-04-11" },
+                }}
                 // isValidDate = {disablePastDt}
                 InputLabelProps={{
                   shrink: true,
@@ -157,7 +168,9 @@ console.log(paxFrom)
                 id="outlined-input"
                 label=" Return Date"
                 type="date"
-
+                InputProps={{
+                  inputProps: { min: "2022-04-11" },
+                }}
                 InputLabelProps={{
                   shrink: true,
                 }}
