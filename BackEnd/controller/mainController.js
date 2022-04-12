@@ -14,7 +14,7 @@ const storeItems = new Map([
 ]);
 // creating a session
 router.post("/create-checkout-session", async (req, res) => {
-  console.log(`hehehe`);
+  console.log(req.body);
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],

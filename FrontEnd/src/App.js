@@ -14,6 +14,7 @@ import BookingContext from "./components/context/BookingContext";
 import SeatSelector from "./components/SeatSelector";
 import Summary from "./components/Summary";
 import AllDestinations from "./components/AllDestinations";
+import Success from "./components/Success";
 // stripe stuff
 import "@stripe/stripe-js";
 import Checkout from "./components/Checkout";
@@ -81,6 +82,7 @@ export default function App() {
             <Route path="/seatSelector" element={<SeatSelector />} />
             <Route path="/summary" element={<Summary />} />
             <Route path="/payment" element={<Checkout />} />
+            <Route path="/success" element={<Success />} />
           </Routes>
         </BookingContext.Provider>
         <Routes>
@@ -90,8 +92,6 @@ export default function App() {
           <Route path="/ParticularsForm" element={<ParticularsForm />} />{" "}
           <Route path="/SeatDisplay" element={<SeatDisplay />} />
           <Route path="/alldestinations" element={<AllDestinations />} />
-
-
           {/* <Route path="/summary" element={<Summary />} /> */}
           {/* <Route
             path="/bookingSummary"

@@ -9,6 +9,7 @@ import FlightCard from "./FlightCard";
 import FlightSection from "./FlightSection";
 import BookingContext from "./context/BookingContext";
 import axios from "axios";
+import { nanoid } from "nanoid";
 
 const Results = () => {
   const bookingContext = useContext(BookingContext);
@@ -18,8 +19,6 @@ const Results = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(bookingContext.booking.queryParams);
-
     let data = JSON.stringify(bookingContext.booking.queryParams);
 
     let config = {
@@ -41,14 +40,13 @@ const Results = () => {
   }, []);
 
   useEffect(() => {
-    console.log(apiData);
     bookingContext.booking.airports = apiData.airports;
-    console.log(apiData);
     let display = apiData.flights.map((details, flightIndex) => (
       <FlightSection
         flightDetails={details}
         flightIndex={flightIndex}
         setSelectedFlight={setSelectedFlight}
+        key={nanoid()}
       ></FlightSection>
     ));
     setFlightDisplay(display);

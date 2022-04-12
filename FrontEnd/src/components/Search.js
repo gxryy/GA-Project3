@@ -26,6 +26,9 @@ const Search = () => {
   const [departDateValue, setdepartDateValue] = useState("");
   const [returnDateValue, setReturnDateValue] = useState("");
 
+  useEffect(() => {
+    console.log(typeof FromValue);
+  }, [FromValue]);
   //HANDLECHANGE
   const handleChangePax = (event) => {
     setPaxNum(event.target.value);
@@ -71,15 +74,14 @@ const Search = () => {
 
   // LIST OF ALL AIRPORT CODES
   const allAirportCode = paxFrom.map((data, index) => {
-    return (
-      data.airportName +
-      " " +
-      data.airportCode +
-      " " +
-      data.cityName +
-      " " +
-      data.countryName
-    );
+    return data.airportCode;
+    // +
+    // " " +
+    // data.airportName +
+    // " " +
+    // data.cityName +
+    // " " +
+    // data.countryName
   });
   console.log(allAirportCode);
   console.log(paxFrom);
@@ -95,7 +97,16 @@ const Search = () => {
 
   const today = new Date();
   console.log(today);
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1; // Months start at 0!
+  let dd = today.getDate();
+
+  if (dd < 10) dd = "0" + dd;
+  if (mm < 10) mm = "0" + mm;
+  const currentDate = yyyy + "-" + mm + "-" + dd;
   //RETURN
+  // Getting current date
+
   return (
     <>
       <Card sx={{ minWidth: 275 }}>
@@ -147,7 +158,7 @@ const Search = () => {
                 type="date"
                 // minDate={"2022-04-11"}
                 InputProps={{
-                  inputProps: { min: "2022-04-11" },
+                  inputProps: { min: currentDate },
                 }}
                 // isValidDate = {disablePastDt}
                 InputLabelProps={{
@@ -169,7 +180,7 @@ const Search = () => {
                 label=" Return Date"
                 type="date"
                 InputProps={{
-                  inputProps: { min: "2022-04-11" },
+                  inputProps: { min: departDateValue },
                 }}
                 InputLabelProps={{
                   shrink: true,
