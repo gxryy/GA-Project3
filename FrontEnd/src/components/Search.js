@@ -5,27 +5,17 @@ import {
   Card,
   Button,
   TextField,
-  Box,
-  FormHelperText,
   FormControl,
   InputLabel,
   Select,
   Autocomplete,
   MenuItem,
 } from "@mui/material";
-import { KeyboardDatePicker } from "@material-ui/pickers";
 import BookingContext from "./context/BookingContext";
 
 const Search = () => {
   const navigate = useNavigate();
   const bookingContext = useContext(BookingContext);
-
-  // VALIDATE
-  // const validate = () => {
-  //   if (paxFrom.index= -1) {
-  //     alert("Please select");
-  //   }
-  // };
 
   // USESTATES
   const [paxClass, setPaxClass] = useState("");
@@ -35,7 +25,6 @@ const Search = () => {
   const [destinationValue, setDestinationValue] = useState(null);
   const [departDateValue, setdepartDateValue] = useState("");
   const [returnDateValue, setReturnDateValue] = useState("");
-  const [error, setErrors] = useState({});
 
   //HANDLECHANGE
   const handleChangePax = (event) => {
@@ -57,7 +46,6 @@ const Search = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // validate();
     bookingContext.booking.queryParams = {
       originAirportCode: FromValue,
       destinationAirportCode: destinationValue,
@@ -83,10 +71,10 @@ const Search = () => {
 
   // LIST OF ALL AIRPORT CODES
   const allAirportCode = paxFrom.map((data, index) => {
-    return data.airportCode;
+    return data.airportName + " " + (data.airportCode) +" "+ data.cityName +" "+data.countryName ;
   });
   console.log(allAirportCode);
-
+console.log(paxFrom)
   // disable past dates
   // const yesterday = new Date().subtract(1, 'day');
   // const disablePastDt = current => {
@@ -96,6 +84,9 @@ const Search = () => {
   // function disablePrevDates(date) {
   //   return date.getDay() === 0;
   // }
+
+  const today = new Date();
+  console.log(today);
   //RETURN
   return (
     <>
@@ -141,7 +132,8 @@ const Search = () => {
             </FormControl>
             {/* DEPART DATE */}
             <FormControl sx={{ m: 2, minWidth: 150 }}>
-              <TextField required
+              <TextField
+                required
                 id="outlined-input"
                 label=" Depart Date"
                 type="date"
@@ -165,6 +157,7 @@ const Search = () => {
                 id="outlined-input"
                 label=" Return Date"
                 type="date"
+
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -207,10 +200,13 @@ const Search = () => {
               </TextField>
             </FormControl>
 
-            <Button sx={{ m: 2, minHeight:40, minWidth: 150}} type="submit" variant="contained">
+            <Button
+              sx={{ m: 2, minHeight: 40, minWidth: 150 }}
+              type="submit"
+              variant="contained"
+            >
               SEARCH
             </Button>
-         
           </form>
         </div>
       </Card>
