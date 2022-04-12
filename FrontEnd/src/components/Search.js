@@ -6,17 +6,26 @@ import {
   Button,
   TextField,
   Box,
+  FormHelperText,
   FormControl,
   InputLabel,
   Select,
   Autocomplete,
   MenuItem,
 } from "@mui/material";
+import { KeyboardDatePicker } from "@material-ui/pickers";
 import BookingContext from "./context/BookingContext";
 
 const Search = () => {
   const navigate = useNavigate();
   const bookingContext = useContext(BookingContext);
+
+  // VALIDATE
+  // const validate = () => {
+  //   if (paxFrom.index= -1) {
+  //     alert("Please select");
+  //   }
+  // };
 
   // USESTATES
   const [paxClass, setPaxClass] = useState("");
@@ -26,6 +35,7 @@ const Search = () => {
   const [destinationValue, setDestinationValue] = useState(null);
   const [departDateValue, setdepartDateValue] = useState("");
   const [returnDateValue, setReturnDateValue] = useState("");
+  const [error, setErrors] = useState({});
 
   //HANDLECHANGE
   const handleChangePax = (event) => {
@@ -47,6 +57,7 @@ const Search = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // validate();
     bookingContext.booking.queryParams = {
       originAirportCode: FromValue,
       destinationAirportCode: destinationValue,
@@ -76,105 +87,131 @@ const Search = () => {
   });
   console.log(allAirportCode);
 
+  // disable past dates
+  // const yesterday = new Date().subtract(1, 'day');
+  // const disablePastDt = current => {
+  //   return current.isAfter(yesterday);
+  // };
+  //disable past dates
+  // function disablePrevDates(date) {
+  //   return date.getDay() === 0;
+  // }
   //RETURN
   return (
     <>
       <Card sx={{ minWidth: 275 }}>
         <div>
-          {/* FROM */}
-          <FormControl sx={{ m: 2, minWidth: 100 }}>
-            <Autocomplete
-              id="From Destinations"
-              options={allAirportCode}
-              renderInput={(text) => (
-                <TextField {...text} label="From" variant="outlined" />
-              )}
-              style={{ width: 200 }}
-              value={FromValue}
-              onChange={(_event, newValue) => {
-                setFromValue(newValue);
-              }}
-            />
-          </FormControl>
-          {/* TO */}
-          <FormControl sx={{ m: 2, minWidth: 100 }}>
-            <Autocomplete
-              id="To Destinations"
-              options={allAirportCode}
-              renderInput={(text) => (
-                <TextField {...text} label="To" variant="outlined" />
-              )}
-              style={{ width: 200 }}
-              value={destinationValue}
-              onChange={(_event, newDestination) => {
-                setDestinationValue(newDestination);
-              }}
-            />
-          </FormControl>
-          {/* DEPART DATE */}
-          <FormControl sx={{ m: 2, minWidth: 150 }}>
-            <TextField
-              id="outlined-input"
-              label=" Depart Date"
+          <form onSubmit={handleSubmit}>
+            {/* FROM */}
+            <FormControl sx={{ m: 2, minWidth: 100 }}>
+              <Autocomplete
+                required
+                id="From Destinations"
+                options={allAirportCode}
+                renderInput={(text) => (
+                  <TextField
+                    required
+                    {...text}
+                    label="From"
+                    variant="outlined"
+                  />
+                )}
+                style={{ width: 200 }}
+                value={FromValue}
+                onChange={(_event, newValue) => {
+                  setFromValue(newValue);
+                }}
+              />
+            </FormControl>
+            {/* TO */}
+            <FormControl sx={{ m: 2, minWidth: 100 }}>
+              <Autocomplete
+                id="To Destinations"
+                options={allAirportCode}
+                renderInput={(text) => (
+                  <TextField required {...text} label="To" variant="outlined" />
+                )}
+                style={{ width: 200 }}
+                value={destinationValue}
+                onChange={(_event, newDestination) => {
+                  setDestinationValue(newDestination);
+                }}
+                required
+              />
+            </FormControl>
+            {/* DEPART DATE */}
+            <FormControl sx={{ m: 2, minWidth: 150 }}>
+              <TextField required
+                id="outlined-input"
+                label=" Depart Date"
+                type="date"
+                // minDate={new Date()}
+                // isValidDate = {disablePastDt}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={handleChangeDepartDate}
+              />
+              {/* <TextField
               type="date"
-              InputLabelProps={{
-                shrink: true,
+              inputProps={{
+                min: "2020-10-10",
               }}
-              onChange={handleChangeDepartDate}
-            />
-          </FormControl>
-          {/* RETURN DATE */}
-          <FormControl sx={{ m: 2, minWidth: 150 }}>
-            <TextField
-              id="outlined-input"
-              label=" Return Date"
-              type="date"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              onChange={handleChangeReturnDate}
-            />
-          </FormControl>
-          <br></br>
-          {/*  PAX CLASS */}
-          <FormControl sx={{ m: 1, minWidth: 150 }}>
-            <InputLabel id="select-autowidth-label">Class</InputLabel>
-            <Select
-              labelId="select-autowidth-label"
-              id="select-autowidth"
-              value={paxClass}
-              onChange={handleChangeClass}
-              autoWidth
-              label="Class"
-            >
-              <MenuItem value=""></MenuItem>
-              <MenuItem value="Y">Economy</MenuItem>
-              <MenuItem value="J">Business</MenuItem>
-            </Select>
-          </FormControl>
-          {/*  NUM OF PAX */}
-          <FormControl sx={{ m: 1, minWidth: 150 }}>
-            <InputLabel id="select-autowidth-label">Passengers</InputLabel>
-            <Select
-              labelId="simple-select-autowidth-label"
-              id="simple-select-autowidth"
-              value={paxNum}
-              onChange={handleChangePax}
-              autoWidth
-              label="Passengers"
-            >
-              <MenuItem value=""></MenuItem>
-              <MenuItem value={1}>1 adult</MenuItem>
-              <MenuItem value={2}>2 adults</MenuItem>
-              <MenuItem value={3}>3 adults</MenuItem>
-              <MenuItem value={4}>4 adults</MenuItem>
-              <MenuItem value={5}>5 adults</MenuItem>
-            </Select>
-          </FormControl>
+            /> */}
+            </FormControl>
+            {/* RETURN DATE */}
+            <FormControl sx={{ m: 2, minWidth: 150 }}>
+              <TextField
+                id="outlined-input"
+                label=" Return Date"
+                type="date"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={handleChangeReturnDate}
+                required
+              />
+            </FormControl>
+            <br></br>
+            {/*  PAX CLASS */}
+            <FormControl sx={{ m: 1, minWidth: 150 }}>
+              <InputLabel id="input-label">Class</InputLabel>
+              <Select
+                id="select-autowidth"
+                value={paxClass}
+                onChange={handleChangeClass}
+                required
+                label="Class"
+              >
+                <MenuItem value="Y">Economy</MenuItem>
+                <MenuItem value="J">Business</MenuItem>
+              </Select>
+            </FormControl>
+            {/*  NUM OF PAX */}
+            <FormControl sx={{ m: 1, minWidth: 150 }}>
+              <InputLabel id="input-label"></InputLabel>
+              <TextField
+                select
+                required
+                id="simple-select-autowidth"
+                value={paxNum}
+                onChange={handleChangePax}
+                label="Passengers"
+              >
+                <MenuItem value=""></MenuItem>
+                <MenuItem value={1}>1 adult</MenuItem>
+                <MenuItem value={2}>2 adults</MenuItem>
+                <MenuItem value={3}>3 adults</MenuItem>
+                <MenuItem value={4}>4 adults</MenuItem>
+                <MenuItem value={5}>5 adults</MenuItem>
+              </TextField>
+            </FormControl>
 
-          <Button variant="contained" onClick={handleSubmit}>
-            SEARCH
-          </Button>
+            <Button sx={{ m: 2, minHeight:40, minWidth: 150}} type="submit" variant="contained">
+              SEARCH
+            </Button>
+         
+          </form>
         </div>
       </Card>
     </>
