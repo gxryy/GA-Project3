@@ -95,7 +95,16 @@ const Search = () => {
 
   const today = new Date();
   console.log(today);
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1; // Months start at 0!
+  let dd = today.getDate();
+
+  if (dd < 10) dd = "0" + dd;
+  if (mm < 10) mm = "0" + mm;
+  const currentDate = yyyy + "-" + mm + "-" + dd;
   //RETURN
+  // Getting current date
+
   return (
     <>
       <Card sx={{ minWidth: 275 }}>
@@ -147,7 +156,7 @@ const Search = () => {
                 type="date"
                 // minDate={"2022-04-11"}
                 InputProps={{
-                  inputProps: { min: "2022-04-11" },
+                  inputProps: { min: currentDate },
                 }}
                 // isValidDate = {disablePastDt}
                 InputLabelProps={{
@@ -169,7 +178,7 @@ const Search = () => {
                 label=" Return Date"
                 type="date"
                 InputProps={{
-                  inputProps: { min: "2022-04-11" },
+                  inputProps: { min: departDateValue },
                 }}
                 InputLabelProps={{
                   shrink: true,
