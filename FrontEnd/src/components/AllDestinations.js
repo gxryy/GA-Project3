@@ -4,7 +4,6 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import IconButton from "@mui/material/IconButton";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 const AllDestinations = () => {
   const link = (name) => {
@@ -22,8 +21,8 @@ const AllDestinations = () => {
       title: "Dubai",
     },
     {
-      img: "https://i.ibb.co/8NvMj2V/Makassar.jpg",
-      title: "Makkasar",
+      img: "https://i.ibb.co/bNGn68R/Wellington1.jpg",
+      title: "Wellington",
     },
     {
       img: "https://i.ibb.co/jwDqgGS/Male.jpg",
@@ -58,12 +57,12 @@ const AllDestinations = () => {
       title: "Auckland",
     },
     {
-      img: "https://i.ibb.co/vdmxs22/Bali.jpg",
-      title: "Bali",
+      img: "https://i.ibb.co/kKYrVhp/Istanbul.jpg",
+      title: "Istanbul",
     },
     {
-      img: "https://i.ibb.co/QQNsQ10/HongKong.jpg",
-      title: "Hongkong",
+      img: "https://i.ibb.co/hHFdzf8/Phuket.jpg",
+      title: "Phuket",
     },
     {
       img: "https://i.ibb.co/dpZH8JN/Bangkok.jpg",
@@ -84,6 +83,18 @@ const AllDestinations = () => {
     {
       img: "https://i.ibb.co/qWzSJc1/Beijing.jpg",
       title: "Beijing",
+    },
+    {
+      img: "https://i.ibb.co/mqvk3jf/Barcelona.jpg",
+      title: "Barcelona",
+    },
+    {
+      img: "https://i.ibb.co/55w9zF8/Kathmandu.jpg",
+      title: "Kathmandu",
+    },
+    {
+      img: "https://i.ibb.co/HhDmXHB/Brisbane.jpg",
+      title: "Brisbane",
     },
   ];
   return (
