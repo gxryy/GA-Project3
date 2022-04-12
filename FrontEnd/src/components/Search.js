@@ -26,6 +26,9 @@ const Search = () => {
   const [departDateValue, setdepartDateValue] = useState("");
   const [returnDateValue, setReturnDateValue] = useState("");
 
+  useEffect(() => {
+    console.log(typeof FromValue);
+  }, [FromValue]);
   //HANDLECHANGE
   const handleChangePax = (event) => {
     setPaxNum(event.target.value);
@@ -71,15 +74,14 @@ const Search = () => {
 
   // LIST OF ALL AIRPORT CODES
   const allAirportCode = paxFrom.map((data, index) => {
-    return (
-      data.airportName +
-      " " +
-      data.airportCode +
-      " " +
-      data.cityName +
-      " " +
-      data.countryName
-    );
+    return data.airportCode;
+    // +
+    // " " +
+    // data.airportName +
+    // " " +
+    // data.cityName +
+    // " " +
+    // data.countryName
   });
   console.log(allAirportCode);
   console.log(paxFrom);

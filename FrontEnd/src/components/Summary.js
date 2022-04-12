@@ -12,7 +12,7 @@ const Summary = () => {
 
   useEffect(() => {
     let summary = [];
-    for (let i = 0; i < bookingContext.booking.queryParams.adultCount; i++) {
+    for (let i = 0; i < bookingContext.booking.passengerInfo.length; i++) {
       summary.push(
         <>
           <Typography variant="h3" key={nanoid()}>
@@ -34,7 +34,7 @@ const Summary = () => {
           </Typography>
           <br />
           <br />
-          <Typography variant="h6" key={nanoid()}>
+          {/* <Typography variant="h6" key={nanoid()}>
             Flight Details
           </Typography>
           <Typography>
@@ -46,7 +46,7 @@ const Summary = () => {
             <br />
             <strong>Selected Seat:</strong>
             {bookingContext.booking.seatSelection[i]}
-          </Typography>
+          </Typography> */}
         </>
       );
     }
@@ -56,6 +56,32 @@ const Summary = () => {
   const handleSubmitEdit = (event) => {
     event.preventDefault();
     navigate("/PassengerDetails");
+  };
+
+  const nextHandler = () => {
+    fetch("http://localhost:5001/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: [
+          { id: 1, quantity: 1 },
+          { id: 2, quantity: 1 },
+        ],
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        return res.json().then((json) => Promise.reject(json));
+      })
+      .then(({ url }) => {
+        window.location = url;
+        console.log(url);
+      })
+      .catch((e) => {
+        console.log(e.error);
+      });
   };
 
   return (
@@ -68,7 +94,10 @@ const Summary = () => {
         <Button type="submit" onClick={handleSubmitEdit}>
           Edit
         </Button>
-        <Button type="submit"> Next</Button>
+        <Button type="submit" onClick={nextHandler}>
+          {" "}
+          Make Payment
+        </Button>
       </Card>
     </>
   );
