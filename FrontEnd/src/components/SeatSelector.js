@@ -25,6 +25,17 @@ const SeatSelector = () => {
   const [passengerSelected, setPassengerSelected] = useState(0);
   const [seatSelection, setSeatSelection] = useState([]);
 
+  // Initial effect to set legs and passenger states from context
+  useEffect(() => {
+    let legs = [];
+    for (let flight of bookingContext.booking.selectedFlight) {
+      legs.push(...flight.legs);
+    }
+    setLegs(legs);
+    setPassengers(bookingContext.booking.passengerInfo);
+  }, []);
+
+  // useEffect to update seatMap upon change in seatSelection
   useEffect(() => {
     if (seatSelection.length > 0) {
       setSeatMap((prev) => {
@@ -58,15 +69,7 @@ const SeatSelector = () => {
     }
   }, [seatSelection]);
 
-  useEffect(() => {
-    let legs = [];
-    for (let flight of bookingContext.booking.selectedFlight) {
-      legs.push(...flight.legs);
-    }
-    setLegs(legs);
-    setPassengers(bookingContext.booking.passengerInfo);
-  }, []);
-
+  // Effect to get the initial seatMap from BE
   useEffect(() => {
     if (legs.length > 0) getSeatMap(0);
   }, [legs]);
@@ -79,6 +82,7 @@ const SeatSelector = () => {
     setTabIndex(newIndex);
   };
 
+  // function to request seatmap from the backend.. then update the seatmap state
   const getSeatMap = (index) => {
     let data = JSON.stringify({
       flightNumber: legs[index].flightNumber,
@@ -105,6 +109,7 @@ const SeatSelector = () => {
       });
   };
 
+  // function for rendering of tabs
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -140,10 +145,12 @@ const SeatSelector = () => {
     );
   }
 
+  // Handler to set selected passenger
   const passengerHandler = (index) => {
     setPassengerSelected(index);
   };
 
+  // Handler to update seat selection upon selection of seats
   const selectionHandler = (seatSelected, tabIndex) => {
     // update seat selection
     setSeatSelection((prev) => {
@@ -153,6 +160,11 @@ const SeatSelector = () => {
       newSeatSelection[passengerSelected] = seatArray;
       return newSeatSelection;
     });
+  };
+
+  const nextHandler = () => {
+    bookingContext.booking.seatSelection = seatSelection;
+    navigate("/summary");
   };
 
   return (
@@ -187,7 +199,7 @@ const SeatSelector = () => {
         })}
       </Box>
       <Box>
-        <Button>Next</Button>
+        <Button onClick={nextHandler}>Next</Button>
       </Box>
     </>
   );
