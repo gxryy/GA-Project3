@@ -14,6 +14,11 @@ import BookingContext from "./components/context/BookingContext";
 import SeatSelector from "./components/SeatSelector";
 import Summary from "./components/Summary";
 import AllDestinations from "./components/AllDestinations";
+// stripe stuff
+import "@stripe/stripe-js";
+import Checkout from "./components/Checkout";
+// import Summary from "./components/Summary";
+
 const theme = createTheme({
   palette: {
     primary: cyan,
@@ -75,6 +80,7 @@ export default function App() {
             <Route path="/passengerDetails" element={<PassengerDetails />} />
             <Route path="/seatSelector" element={<SeatSelector />} />
             <Route path="/summary" element={<Summary />} />
+            <Route path="/payment" element={<Checkout />} />
           </Routes>
         </BookingContext.Provider>
         <Routes>
@@ -85,10 +91,12 @@ export default function App() {
           <Route path="/SeatDisplay" element={<SeatDisplay />} />
           <Route path="/alldestinations" element={<AllDestinations />} />
 
-          <Route
+
+          {/* <Route path="/summary" element={<Summary />} /> */}
+          {/* <Route
             path="/bookingSummary"
             element={<h1>bookingSummary route</h1>}
-          />
+          /> */}
           <Route
             path="/seatSelection"
             element={<h1>seat Selection route</h1>}
