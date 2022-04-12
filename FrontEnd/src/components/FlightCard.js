@@ -4,7 +4,13 @@ import { nanoid } from "nanoid";
 import FlightLeg from "./FlightLeg";
 import BookingContext from "./context/BookingContext";
 
-const FlightCard = ({ flightSegments, id, setSelectedFlight, flightIndex }) => {
+const FlightCard = ({
+  flightSegments,
+  id,
+  setSelectedFlight,
+  flightIndex,
+  displaySelect = true,
+}) => {
   const bookingContext = useContext(BookingContext);
 
   const clickHandler = () => {
@@ -39,14 +45,16 @@ const FlightCard = ({ flightSegments, id, setSelectedFlight, flightIndex }) => {
         >
           <Typography variant="h5">${flightSegments.fare}</Typography>
         </Box>
-        <Button
-          onClick={clickHandler}
-          size="large"
-          sx={{ marginRight: "2em" }}
-          variant="outlined"
-        >
-          Select
-        </Button>
+        {displaySelect && (
+          <Button
+            onClick={clickHandler}
+            size="large"
+            sx={{ marginRight: "2em" }}
+            variant="outlined"
+          >
+            Select
+          </Button>
+        )}
       </Stack>
     </>
   );
