@@ -5,6 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const PORT = process.env.PORT || 5001;
 const Bookings = require("./model/bookings");
+
 // DB CONNECTION
 const connectDB = require("./db/db");
 connectDB(process.env.ATLAS_URI_RW);
@@ -33,5 +34,5 @@ const fetchFlights = require("./SQ_API/fetchFlights");
 // // ROUTES
 // Listener
 app.listen(PORT, () => {
-    console.log(`server started on port ${PORT}`);
+  console.log(`server started on port ${PORT}`);
 });
