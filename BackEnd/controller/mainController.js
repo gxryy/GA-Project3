@@ -1,11 +1,45 @@
 const express = require("express");
 
 const router = express.Router();
-
+const cors = require("cors");
 const fetchDestinations = require("../SQ_API/fetchDestinations");
 const fetchFlights = require("../SQ_API/fetchFlights");
 const Bookings = require("../model/bookings");
 const Flights = require("../model/flights");
+const stripe = require("stripe")(process.env.REACT_APP_STRIPE_SECRET_KEY);
+
+const storeItems = new Map([
+  [1, { priceInCents: 80000, name: "Ticket to Jerez" }],
+  [2, { priceInCents: 30000, name: "Ticket to KL" }],
+]);
+// creating a session
+router.post("/create-checkout-session", async (req, res) => {
+  console.log(req.body);
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: req.body.items.map((item) => {
+        const storeItem = storeItems.get(item.id);
+        return {
+          price_data: {
+            currency: "sgd",
+            product_data: {
+              name: storeItem.name,
+            },
+            unit_amount: storeItem.priceInCents,
+          },
+          quantity: item.quantity,
+        };
+      }),
+      success_url: `${process.env.SERVER_URL}/success`,
+      cancel_url: `${process.env.SERVER_URL}/summary`,
+    });
+    res.json({ url: session.url });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 
 router.get("/bookings", async (req, res) => {
   const createBooking = new Bookings({

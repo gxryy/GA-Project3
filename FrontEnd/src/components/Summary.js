@@ -23,8 +23,8 @@ const Summary = () => {
           </Typography>
           <Typography variant="p" key={nanoid()}>
             <strong>Name</strong>:
-            {bookingContext.booking.passengerInfo[i].title}{" "}
-            {bookingContext.booking.passengerInfo[i].firstName}{" "}
+            {bookingContext.booking.passengerInfo[i].title}
+            {bookingContext.booking.passengerInfo[i].firstName}
             {bookingContext.booking.passengerInfo[i].lastName}
             <br />
             <strong>Email</strong>:

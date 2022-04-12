@@ -13,6 +13,11 @@ import SeatDisplay from "./components/SeatDisplay";
 import BookingContext from "./components/context/BookingContext";
 import SeatSelector from "./components/SeatSelector";
 import Summary from "./components/Summary";
+import AllDestinations from "./components/AllDestinations";
+import Success from "./components/Success";
+// stripe stuff
+import "@stripe/stripe-js";
+import Checkout from "./components/Checkout";
 // import Summary from "./components/Summary";
 
 const theme = createTheme({
@@ -76,6 +81,8 @@ export default function App() {
             <Route path="/passengerDetails" element={<PassengerDetails />} />
             <Route path="/seatSelector" element={<SeatSelector />} />
             <Route path="/summary" element={<Summary />} />
+            <Route path="/payment" element={<Checkout />} />
+            <Route path="/success" element={<Success />} />
           </Routes>
         </BookingContext.Provider>
         <Routes>
@@ -84,11 +91,12 @@ export default function App() {
           <Route path="/booking" element={<h1>Booking route</h1>} />{" "}
           <Route path="/ParticularsForm" element={<ParticularsForm />} />{" "}
           <Route path="/SeatDisplay" element={<SeatDisplay />} />
+          <Route path="/alldestinations" element={<AllDestinations />} />
           {/* <Route path="/summary" element={<Summary />} /> */}
-          <Route
+          {/* <Route
             path="/bookingSummary"
             element={<h1>bookingSummary route</h1>}
-          />
+          /> */}
           <Route
             path="/seatSelection"
             element={<h1>seat Selection route</h1>}
