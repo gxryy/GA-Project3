@@ -100,10 +100,12 @@ const AllDestinations = () => {
   return (
     <>
       <center>
-        <Typography variant="h3">Where We Fly</Typography>
+        <Typography sx={{ marginTop: 30 }} variant="h3">
+          Where We Fly
+        </Typography>
         <br />
         <br />
-        <ImageList sx={{ width: 1010 }} cols={3}>
+        <ImageList sx={{ width: 1010 }} cols={3} gap={8}>
           {itemData.map((item) => (
             <ImageListItem key={item.img}>
               <img
@@ -112,6 +114,7 @@ const AllDestinations = () => {
                 alt={item.title}
                 loading="lazy"
                 onClick={() => link(item.title)}
+                style={{ cursor: "pointer" }}
               />
               <ImageListItemBar
                 sx={{

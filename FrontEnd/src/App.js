@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { cyan } from "@mui/material/colors";
+import { blue, cyan } from "@mui/material/colors";
 import { Route, Routes } from "react-router";
 import SearchFlight from "./components/SearchFlight";
 import Search from "./components/Search";
@@ -15,6 +15,8 @@ import SeatSelector from "./components/SeatSelector";
 import Summary from "./components/Summary";
 import AllDestinations from "./components/AllDestinations";
 import Success from "./components/Success";
+import NewsPage from "./components/NewsPage";
+
 // stripe stuff
 import "@stripe/stripe-js";
 import Checkout from "./components/Checkout";
@@ -92,6 +94,7 @@ export default function App() {
           <Route path="/ParticularsForm" element={<ParticularsForm />} />{" "}
           <Route path="/SeatDisplay" element={<SeatDisplay />} />
           <Route path="/alldestinations" element={<AllDestinations />} />
+          <Route path="/news" element={<NewsPage />} />
           {/* <Route path="/summary" element={<Summary />} /> */}
           {/* <Route
             path="/bookingSummary"
