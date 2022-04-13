@@ -36,6 +36,13 @@ const Search = () => {
 
   useEffect(() => {
     setChecked(true);
+    bookingContext.setBooking({
+      queryParams: {},
+      selectedFlight: [],
+      passengerInfo: [],
+      seatSelection: [],
+      airports: [],
+    });
   }, []);
 
   //HANDLECHANGE

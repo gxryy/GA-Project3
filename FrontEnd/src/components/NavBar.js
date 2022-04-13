@@ -68,7 +68,7 @@ const NavBar = () => {
             >
               <img
                 src={require("../Media/NynaAirlines-1.png")}
-                style={{ height: "80px", margin: "0em 1em" }}
+                style={{ cursor: "pointer", height: "80px", margin: "0em 1em" }}
                 id="logo"
               />
             </ImageListItem>
