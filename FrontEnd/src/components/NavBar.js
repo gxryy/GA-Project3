@@ -1,5 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import {
   Toolbar,
   IconButton,
@@ -10,6 +14,7 @@ import {
   Box,
   Menu,
   ImageListItem,
+  Link,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -110,6 +115,7 @@ const NavBar = () => {
                 ))}
               </Menu>
             </Box>
+
             <Typography
               variant="h4"
               noWrap
@@ -137,6 +143,18 @@ const NavBar = () => {
                 </Button>
               ))}
             </Box>
+            <a href="https://www.facebook.com/singaporeair" target="_blank">
+              <FacebookIcon fontSize="large" />
+            </a>
+            <a href="https://www.instagram.com/singaporeair/" target="_blank">
+              <InstagramIcon fontSize="large" />
+            </a>
+            <a href="https://www.youtube.com/singaporeair" target="_blank">
+              <YouTubeIcon fontSize="large" />
+            </a>
+            <a href="https://twitter.com/singaporeair" target="_blank">
+              <TwitterIcon fontSize="large" />
+            </a>
           </Toolbar>
         </Container>
       </AppBar>
