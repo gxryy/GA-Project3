@@ -109,6 +109,11 @@ const Summary = (props) => {
     <>
       <Container sx={{ marginY: "1em" }} maxWidth="xl">
         <Typography variant="h2">Booking Summary</Typography>
+        {bookingContext.booking.type == "manage" && (
+          <Typography variant="h3">
+            Booking Reference: {bookingContext.booking.bookingRef}
+          </Typography>
+        )}
         <Container sx={{ marginY: "1.5em" }}>
           <Typography variant="h4">Passenger Details</Typography>
           <Stack direction="row" sx={{ marginY: "1em" }}>
