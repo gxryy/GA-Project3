@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { Box, Typography, Stack, Button, Container } from "@mui/material";
 import { nanoid } from "nanoid";
 import FlightLeg from "./FlightLeg";
@@ -7,7 +7,6 @@ const FlightCard = ({
   flightSegments,
   setSelectedFlight,
   flightIndex,
-  selectedFlight,
   displaySelect = true,
 }) => {
   const clickHandler = () => {

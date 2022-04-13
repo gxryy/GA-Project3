@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Typography, Box, Container, Stack, Divider } from "@mui/material";
+import React, { useContext } from "react";
+import { Typography, Container, Stack } from "@mui/material";
 import BookingContext from "./context/BookingContext";
 import { nanoid } from "nanoid";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 
-const LegCard = ({ leg, airports }) => {
+const LegCard = ({ leg }) => {
   const bookingContext = useContext(BookingContext);
 
   const getAirportName = (airportCode) => {

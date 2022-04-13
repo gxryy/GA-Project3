@@ -45,7 +45,7 @@ const SeatSelector = () => {
         // remove previous seats
         let newIndexMap = newSeatMap[tabIndex].map((seat) => {
           let newSeat = seat;
-          if (seat.source == "selected") {
+          if (seat.source === "selected") {
             newSeat.source = "";
             newSeat.isVacant = true;
           }
@@ -60,7 +60,7 @@ const SeatSelector = () => {
         }
         for (let i of seatsSelected) {
           let seatIndex = newSeatMap[tabIndex].findIndex((seat) => {
-            if (seat.seat == i) return true;
+            if (seat.seat === i) return true;
           });
           newSeatMap[tabIndex][seatIndex].isVacant = false;
           newSeatMap[tabIndex][seatIndex].source = "selected";
@@ -122,7 +122,7 @@ const SeatSelector = () => {
 
   // function for rendering of tabs
   function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const { children, value, index } = props;
 
     return (
       <div hidden={value !== index}>

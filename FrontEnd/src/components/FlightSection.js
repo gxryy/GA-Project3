@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import FlightCard from "./FlightCard";
-import { Box, Typography, Card, Button } from "@mui/material";
+import { Typography } from "@mui/material";
 import { nanoid } from "nanoid";
 
 const FlightSection = ({

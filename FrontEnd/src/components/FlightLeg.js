@@ -1,4 +1,4 @@
-import { Typography, Container, Stack, Grid } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import LegCard from "./LegCard";
 const FlightLeg = ({ leg }) => {
