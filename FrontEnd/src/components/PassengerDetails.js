@@ -1,4 +1,4 @@
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, Container } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
@@ -16,16 +16,20 @@ const PassengerDetails = () => {
     let display = [];
     for (let i = 0; i < bookingContext.booking.queryParams.adultCount; i++) {
       display.push(
-        <Typography variant="h4" key={nanoid()}>
-          Passenger {i + 1}
-        </Typography>
+        <Container mt="1em">
+          <Typography variant="h4" key={nanoid()}>
+            Passenger {i + 1}
+          </Typography>
+        </Container>
       );
       display.push(
-        <ParticularsForm
-          index={i}
-          setForm={setDetails}
-          key={nanoid()}
-        ></ParticularsForm>
+        <Container sx={{ marginTop: "1em" }}>
+          <ParticularsForm
+            index={i}
+            setForm={setDetails}
+            key={nanoid()}
+          ></ParticularsForm>
+        </Container>
       );
     }
     setFormDisplay(display);

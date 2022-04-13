@@ -25,6 +25,7 @@ const SeatSelector = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [passengerSelected, setPassengerSelected] = useState(0);
   const [seatSelection, setSeatSelection] = useState([]);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   // Initial effect to set legs and passenger states from context
   useEffect(() => {
@@ -213,7 +214,9 @@ const SeatSelector = () => {
         })}
       </Box>
       <Box>
-        <Button onClick={nextHandler}>Next</Button>
+        <Button disabled={buttonDisabled} onClick={nextHandler}>
+          Next
+        </Button>
       </Box>
     </>
   );

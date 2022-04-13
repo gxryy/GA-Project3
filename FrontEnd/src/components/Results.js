@@ -9,6 +9,7 @@ import FlightCard from "./FlightCard";
 import FlightSection from "./FlightSection";
 import BookingContext from "./context/BookingContext";
 import axios from "axios";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { nanoid } from "nanoid";
 
 const Results = () => {
@@ -46,6 +47,7 @@ const Results = () => {
         flightDetails={details}
         flightIndex={flightIndex}
         setSelectedFlight={setSelectedFlight}
+        selectedFlight={selectedFlight}
         key={nanoid()}
       ></FlightSection>
     ));
@@ -66,30 +68,21 @@ const Results = () => {
     } else console.log(`Missing flight selection`);
   };
 
-  // KL test
-  // const flightList = MockKL.flights.map((details, flightIndex) => (
-  //   <FlightSection
-  //     flightDetails={details}
-  //     flightIndex={flightIndex}
-  //     setSelectedFlight={setSelectedFlight}
-  //   ></FlightSection>
-  // ));
-
-  // XRY test
-  // const flightList = MockXRY.flights.map((details, flightIndex) => (
-  //   <FlightSection
-  //     flightDetails={details}
-  //     flightIndex={flightIndex}
-  //     setSelectedFlight={setSelectedFlight}
-  //   ></FlightSection>
-  // ));
+  const loading = <img src={require("../Media/loading.gif")}></img>;
 
   return (
     <div>
-      {/* {flightList} */}
-      {flightDisplay}
-
-      <Button onClick={nextHandler}>Next</Button>
+      {apiData.airports.length > 0 ? flightDisplay : loading}
+      {apiData.airports.length > 0 && (
+        <Button
+          onClick={nextHandler}
+          size="large"
+          endIcon={<ArrowForwardIosIcon />}
+          sx={{ marginY: "2em" }}
+        >
+          Next
+        </Button>
+      )}
     </div>
   );
 };

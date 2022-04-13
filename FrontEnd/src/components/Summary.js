@@ -7,6 +7,7 @@ import FlightCard from "./FlightCard";
 
 const Summary = () => {
   const bookingContext = useContext(BookingContext);
+  console.log(bookingContext.booking);
   const [passengerDetails, setPassengerDetails] = useState([]);
   const [flightDetails, setFlightDetails] = useState([]);
 
