@@ -125,7 +125,9 @@ router.get("/paymentCheck/:bookingRef/:id", (req, res) => {
         );
       } else {
         console.log(`payment fail`);
-        res.redirect(`http://localhost:3000/paymentfail`);
+        res.redirect(
+          `http://localhost:3000/paymentfail/${req.params.bookingRef}/${data.booking.passengerInfo[0].lastName}`
+        );
       }
     } else console.log(`Booking Reference Not Found in DB!`);
     if (err) console.log(err);

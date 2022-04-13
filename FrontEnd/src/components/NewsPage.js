@@ -1,6 +1,14 @@
 import React from "react";
 import { Box, Typography, Stack, Grid } from "@mui/material";
+import mockKL from "./mockResponse/KL.json";
+import mockXRY from "./mockResponse/XRY.json";
+
 const NewsPage = () => {
+  console.log(`KL mock data:`);
+  console.log(mockKL);
+  console.log(`XRY mock data:`);
+  console.log(mockXRY);
+
   return (
     <div>
       <Box sx={{ marginTop: 7 }}>

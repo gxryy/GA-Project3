@@ -55,7 +55,10 @@ export default function App() {
             <Route path="/passengerDetails" element={<PassengerDetails />} />
             <Route path="/seatSelector" element={<SeatSelector />} />
             <Route path="/summary" element={<Summary />} />
-            <Route path="/paymentfail" element={<PaymentFail />} />
+            <Route
+              path="/paymentfail/:id/:lastName"
+              element={<PaymentFail />}
+            />
             <Route path="/manage" element={<ManageBookings />} />
             <Route path="/manage/:id/:lastName" element={<ManageBookings />} />
           </Routes>
