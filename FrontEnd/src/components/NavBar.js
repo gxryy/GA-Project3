@@ -14,7 +14,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-const pages = ["Search", "Manage Booking", "Sign up"];
+const pages = ["Search", "Manage Booking", "Destinations", "Sign up"];
 
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -35,6 +35,9 @@ const NavBar = () => {
         break;
       case "Manage Booking":
         navigate("/manage");
+        break;
+      case "Destinations":
+        navigate("/alldestinations");
         break;
       case "Sign up":
         navigate("/signup");
@@ -59,7 +62,7 @@ const NavBar = () => {
               onClick={handleCloseNavMenu}
             >
               <img
-                src={"logo"}
+                src={require("../Media/NynaAirlines-1.png")}
                 style={{ height: "80px", margin: "0em 1em" }}
                 id="logo"
               />
