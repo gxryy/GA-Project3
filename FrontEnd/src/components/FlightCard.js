@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Box, Typography, Stack, Button, Container } from "@mui/material";
 import { nanoid } from "nanoid";
 import FlightLeg from "./FlightLeg";
@@ -6,12 +6,14 @@ import BookingContext from "./context/BookingContext";
 
 const FlightCard = ({
   flightSegments,
-  id,
   setSelectedFlight,
   flightIndex,
+  selectedFlight,
   displaySelect = true,
 }) => {
-  const bookingContext = useContext(BookingContext);
+  useEffect(() => {
+    console.log(selectedFlight);
+  }, [selectedFlight]);
 
   const clickHandler = () => {
     setSelectedFlight((prev) => {
@@ -21,19 +23,21 @@ const FlightCard = ({
     });
   };
 
+  const borderSelected = "3px solid orange";
+  const borderDefault = "1px solid grey";
+
   return (
     <>
       <Stack
         direction="row"
-        border="1px solid black"
+        border={borderDefault}
         maxWidth={"xl"}
         justifyContent="center"
         marginX={"1em"}
+        marginY={"5px"}
       >
         <Container maxWidth="xl" display="flex">
-          {console.log(flightSegments)}
           {flightSegments.legs.map((leg, idx) => {
-            console.log(`in leg ${idx}`);
             return <FlightLeg leg={leg} key={nanoid()}></FlightLeg>;
           })}
         </Container>

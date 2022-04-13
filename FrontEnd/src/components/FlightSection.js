@@ -3,8 +3,12 @@ import FlightCard from "./FlightCard";
 import { Box, Typography, Card, Button } from "@mui/material";
 import { nanoid } from "nanoid";
 
-const FlightSection = ({ flightDetails, flightIndex, setSelectedFlight }) => {
-  //   console.log(flightDetails.segments);
+const FlightSection = ({
+  flightDetails,
+  flightIndex,
+  setSelectedFlight,
+  selectedFlight,
+}) => {
   return (
     <div>
       <Typography align="left" variant="h3">
@@ -20,6 +24,7 @@ const FlightSection = ({ flightDetails, flightIndex, setSelectedFlight }) => {
               key={id}
               id={id}
               setSelectedFlight={setSelectedFlight}
+              selectedFlight={selectedFlight}
               flightIndex={flightIndex}
             />
           );

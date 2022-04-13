@@ -63,10 +63,10 @@ export default function App() {
             <Route path="/summary" element={<Summary />} />
             <Route path="/success" element={<Success />} />
             <Route path="/paymentfail" element={<PaymentFail />} />
+            <Route path="/manage" element={<ManageBookings />} />
           </Routes>
         </BookingContext.Provider>
         <Routes>
-          <Route path="/manage" element={<ManageBookings />} />
           <Route path="/manage/:id" element={<Manage />} />
           <Route path="/booking" element={<h1>Booking route</h1>} />{" "}
           <Route path="/ParticularsForm" element={<ParticularsForm />} />{" "}

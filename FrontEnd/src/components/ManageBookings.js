@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
 import { useNavigate } from "react-router-dom";
+import BookingContext from "./context/BookingContext";
+import axios from "axios";
 import {
   Card,
   Button,
@@ -20,6 +22,7 @@ const ManageBookings = () => {
   const [bookingRef, setBookingRef] = useState("");
   const [lastName, setLastName] = useState("");
   const navigate = useNavigate();
+  const bookingContext = useContext(BookingContext);
   const GreyTextTypography = withStyles({
     root: {
       color: "grey",
@@ -42,25 +45,34 @@ const ManageBookings = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({
+    let data = JSON.stringify({
       bookingRef: bookingRef,
       lastName: lastName,
     });
 
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
+    let config = {
+      method: "post",
+      url: "http://127.0.0.1:5001/getBooking",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
     };
 
-    fetch("http://127.0.0.1:5001/getBooking", requestOptions)
-      .then((response) => response.text())
-      .then(navigate("/summary"))
-      .catch((error) => console.log("error", error));
+    axios(config)
+      .then((response) => {
+        if (response.data == "error") alert("BOOKING NOT FOUND");
+        else {
+          console.log(response.data);
+          bookingContext.booking = response.data.booking;
+          navigate("/summary");
+        }
+      })
+      .catch((error) => {
+        navigate("/manage");
+        console.log(error);
+      });
   };
 
   return (
