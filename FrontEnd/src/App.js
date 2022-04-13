@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { cyan } from "@mui/material/colors";
+import { cyan, orange, purple } from "@mui/material/colors";
 import { Route, Routes } from "react-router";
 import Search from "./components/Search";
 import Test from "./components/Test";
@@ -23,7 +23,9 @@ import PaymentFail from "./components/PaymentFail";
 
 const theme = createTheme({
   palette: {
-    primary: cyan,
+    primary: {
+      main: "#00266b",
+    },
     secondary: {
       main: "#fefefe",
     },

@@ -5,10 +5,14 @@ const express = require("express");
 const cors = require("cors");
 const PORT = process.env.PORT || 5001;
 const Bookings = require("./model/bookings");
+const mongoose = require("mongoose");
 
 // DB CONNECTION
 const connectDB = require("./db/db");
 connectDB(process.env.ATLAS_URI_RW);
+
+mongoose.connect(process.env.ATLAS_URI_RW);
+
 // CONFIGURATION
 const app = express();
 app.use(cors());
