@@ -13,6 +13,7 @@ import {
 import { nanoid } from "nanoid";
 import SeatDisplay from "./SeatDisplay";
 import axios from "axios";
+import { LegendToggleSharp } from "@mui/icons-material";
 
 const SeatSelector = () => {
   const bookingContext = useContext(BookingContext);
@@ -85,8 +86,7 @@ const SeatSelector = () => {
   // function to request seatmap from the backend.. then update the seatmap state
   const getSeatMap = (index) => {
     let data = JSON.stringify({
-      flightNumber: legs[index].flightNumber,
-      departureDateTime: legs[index].departureDateTime,
+      leg: legs[index],
     });
     let config = {
       method: "post",
@@ -164,6 +164,20 @@ const SeatSelector = () => {
 
   const nextHandler = () => {
     bookingContext.booking.seatSelection = seatSelection;
+    let newlegs = JSON.parse(JSON.stringify(legs));
+
+    for (let index in legs) {
+      console.log(seatMap[index]);
+      newlegs[index].seatMap = seatMap[index];
+    }
+    console.log(newlegs);
+    bookingContext.booking.legs = newlegs;
+    let farePerPax = 0;
+    bookingContext.booking.selectedFlight.map(
+      (flight) => (farePerPax += flight.fare)
+    );
+    farePerPax = Math.round(farePerPax * 100) / 100;
+    bookingContext.booking.farePerPax = farePerPax;
     navigate("/summary");
   };
 
