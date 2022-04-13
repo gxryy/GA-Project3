@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Container, Grid, Box } from "@mui/material";
-import axios from "axios";
 import { nanoid } from "nanoid";
 
 const SeatDisplay = (props) => {
@@ -15,7 +14,7 @@ const SeatDisplay = (props) => {
     let YSeatArray = [];
     if (seatMap) {
       for (let seat of seatMap) {
-        seat.cabinClass == "J" ? JSeatArray.push(seat) : YSeatArray.push(seat);
+        seat.cabinClass === "J" ? JSeatArray.push(seat) : YSeatArray.push(seat);
       }
 
       let Jdisplay = [
@@ -37,7 +36,7 @@ const SeatDisplay = (props) => {
         );
 
         for (let j = 0; j < 4; j++) {
-          if (j == 1 || j == 3) {
+          if (j === 1 || j === 3) {
             column.push(<Box width={"40px"} key={nanoid()}></Box>);
           }
           column.push(
@@ -46,7 +45,7 @@ const SeatDisplay = (props) => {
                 sx={
                   JSeatArray[i + j].isVacant
                     ? { ...enabled }
-                    : JSeatArray[i + j].source == "selected"
+                    : JSeatArray[i + j].source === "selected"
                     ? { ...selected }
                     : { ...disabled }
                 }
@@ -78,7 +77,7 @@ const SeatDisplay = (props) => {
         );
 
         for (let j = 0; j < 9; j++) {
-          if (j == 3 || j == 6) {
+          if (j === 3 || j === 6) {
             column.push(<Box width={"40px"} key={nanoid()}></Box>);
           }
           column.push(
@@ -87,7 +86,7 @@ const SeatDisplay = (props) => {
                 sx={
                   YSeatArray[i + j].isVacant
                     ? { ...enabled }
-                    : YSeatArray[i + j].source == "selected"
+                    : YSeatArray[i + j].source === "selected"
                     ? { ...selected }
                     : { ...disabled }
                 }
@@ -111,7 +110,7 @@ const SeatDisplay = (props) => {
 
   const clickHandler = (event) => {
     props.seatMap.map((seat) => {
-      if (seat.seat == event.target.innerText && seat.isVacant)
+      if (seat.seat === event.target.innerText && seat.isVacant)
         props.seatSelection(event.target.innerText);
     });
   };

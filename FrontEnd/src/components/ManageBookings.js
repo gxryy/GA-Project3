@@ -78,7 +78,7 @@ const ManageBookings = () => {
 
     axios(config)
       .then((response) => {
-        if (response.data == "error") alert("BOOKING NOT FOUND");
+        if (response.data === "error") alert("BOOKING NOT FOUND");
         else {
           console.log(response.data);
           bookingContext.booking = response.data.booking;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography, Card, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import FlightSection from "./FlightSection";
 import BookingContext from "./context/BookingContext";
 import axios from "axios";
@@ -25,7 +25,6 @@ const Results = () => {
       },
       data: data,
     };
-
     axios(config)
       .then((response) => {
         setApiData(response.data);

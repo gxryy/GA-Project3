@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import BookingContext from "./context/BookingContext";
-import { Button, Card, Typography, Container, Box, Stack } from "@mui/material";
+import { Button, Typography, Container, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
 import FlightCard from "./FlightCard";
@@ -22,7 +22,7 @@ const Summary = (props) => {
           <Typography variant="h4" key={nanoid()}>
             Passenger {i + 1}
           </Typography>
-          {bookingContext.booking.queryParams.cabinClass == "Y" ? (
+          {bookingContext.booking.queryParams.cabinClass === "Y" ? (
             <Typography variant="h6">
               <strong>ECONOMY</strong>
             </Typography>
@@ -109,7 +109,7 @@ const Summary = (props) => {
     <>
       <Container sx={{ marginY: "1em" }} maxWidth="xl">
         <Typography variant="h2">Booking Summary</Typography>
-        {bookingContext.booking.type == "manage" && (
+        {bookingContext.booking.type === "manage" && (
           <Typography variant="h3">
             Booking Reference: {bookingContext.booking.bookingRef}
           </Typography>
@@ -142,7 +142,7 @@ const Summary = (props) => {
             ).toFixed(2)}
           </Typography>
         </Container>
-        {bookingContext.booking.type == "manage" ? (
+        {bookingContext.booking.type === "manage" ? (
           <Container>
             <Typography variant="h4">
               Payment Status:{" "}
