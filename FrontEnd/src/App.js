@@ -16,6 +16,7 @@ import AllDestinations from "./components/AllDestinations";
 import Success from "./components/Success";
 import Signup from "./components/Signup";
 import Manage from "./components/Manage";
+import ManageBookings from "./components/ManageBookings";
 // stripe stuff
 import "@stripe/stripe-js";
 import PaymentFail from "./components/PaymentFail";
@@ -65,7 +66,7 @@ export default function App() {
           </Routes>
         </BookingContext.Provider>
         <Routes>
-          <Route path="/manage" element={<h1>Manage Booking route</h1>} />
+          <Route path="/manage" element={<ManageBookings />} />
           <Route path="/manage/:id" element={<Manage />} />
           <Route path="/signup" element={<h1>Signup route</h1>} />
           <Route path="/booking" element={<h1>Booking route</h1>} />{" "}
