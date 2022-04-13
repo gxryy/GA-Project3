@@ -10,6 +10,10 @@ const { nanoid, customAlphabet } = require("nanoid");
 const stripe = require("stripe")(process.env.REACT_APP_STRIPE_SECRET_KEY);
 const refGenerator = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8);
 
+router.post("/getBooking").get((req, res) => {
+  Bookings.find().then(() => res.json());
+});
+
 // creating a session
 router.post("/makePayment", async (req, res) => {
   console.log(`in payment`);

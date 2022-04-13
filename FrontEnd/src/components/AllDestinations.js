@@ -1,11 +1,17 @@
-import React from "react";
-import { Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Typography, Grow } from "@mui/material";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import IconButton from "@mui/material/IconButton";
 
 const AllDestinations = () => {
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    setChecked(true);
+  }, []);
+
   const link = (name) => {
     window.open(
       `https://www.singaporeair.com/en_UK/nl/plan-travel/destinations/flights-to-${name}/`
@@ -105,36 +111,42 @@ const AllDestinations = () => {
         </Typography>
         <br />
         <br />
-        <ImageList sx={{ width: 1010 }} cols={3} gap={8}>
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-              <img
-                src={`${item.img}`}
-                srcSet={`${item.img}`}
-                alt={item.title}
-                loading="lazy"
-                onClick={() => link(item.title)}
-                style={{ cursor: "pointer" }}
-              />
-              <ImageListItemBar
-                sx={{
-                  background:
-                    "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
-                    "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
-                }}
-                title={item.title}
-                position="top"
-                actionIcon={
-                  <IconButton
-                    sx={{ color: "white" }}
-                    aria-label={`${item.title}`}
-                  ></IconButton>
-                }
-                actionPosition="center"
-              />
-            </ImageListItem>
-          ))}
-        </ImageList>
+        <Grow
+          in={checked}
+          style={{ transformOrigin: "0 0 0" }}
+          {...(checked ? { timeout: 1000 } : {})}
+        >
+          <ImageList sx={{ width: 1010 }} cols={3} gap={8}>
+            {itemData.map((item) => (
+              <ImageListItem key={item.img}>
+                <img
+                  src={`${item.img}`}
+                  srcSet={`${item.img}`}
+                  alt={item.title}
+                  loading="lazy"
+                  onClick={() => link(item.title)}
+                  style={{ cursor: "pointer" }}
+                />
+                <ImageListItemBar
+                  sx={{
+                    background:
+                      "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
+                      "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+                  }}
+                  title={item.title}
+                  position="top"
+                  actionIcon={
+                    <IconButton
+                      sx={{ color: "white" }}
+                      aria-label={`${item.title}`}
+                    ></IconButton>
+                  }
+                  actionPosition="center"
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </Grow>
       </center>
     </>
   );
