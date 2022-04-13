@@ -6,10 +6,53 @@ const fetchDestinations = require("../SQ_API/fetchDestinations");
 const fetchFlights = require("../SQ_API/fetchFlights");
 const Bookings = require("../model/bookings");
 const Flights = require("../model/flights");
+const Users = require("../model/users");
 const { nanoid, customAlphabet } = require("nanoid");
 const stripe = require("stripe")(process.env.REACT_APP_STRIPE_SECRET_KEY);
 const refGenerator = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8);
+const bcrypt = require("bcrypt");
 
+// creating new User
+router.post("/create", async (req, res) => {
+  // await Users.create(req.body);
+  try {
+    req.body.password = await bcrypt.hash(req.body.password, 12);
+    const createdUser = await Users.create(req.body);
+    console.log("created user is", createdUser);
+    res.json({ status: "ok", message: "user created" });
+  } catch (error) {
+    console.log(error);
+    res.status(401).json("Error");
+  }
+  const newUsers = new Users({
+    name: req.body.title,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    mobile: req.body.mobile,
+    countryCode: req.body.countryCode,
+    passportNumber: req.body.passportNumber,
+  });
+
+  // title: { type: String },
+  // firstName: { type: String },
+  // lastName: { type: String },
+  // email: { type: String },
+  // mobile: { type: Number },
+  // countryCode: { type: String },
+  // passportNumber: { type: String },
+
+  await newUsers.save();
+});
+
+// see all Users
+router.get("/allUsers", async (req, res) => {
+  const allUsers = await Users.find();
+  res.json(allUsers);
+});
+
+//ROUTES
+//Endpoint for getting a booking, verifies the booking reference and last name
 router.post("/getBooking", (req, res) => {
   Bookings.findOne(
     { bookingRef: req.body.bookingRef.toUpperCase() },
@@ -32,7 +75,8 @@ router.post("/getBooking", (req, res) => {
   );
 });
 
-// creating a session
+//Endpoint for stripe payment and stores the booking context into db, with paymentSuccess false.
+//creates 2 uid for payment and fail respectively. stripe to redirect to the Express url that captires the ref and id before res send a redirect to success/failure route in react
 router.post("/makePayment", async (req, res) => {
   console.log(`in payment`);
   let booking = req.body;
@@ -86,19 +130,11 @@ router.get("/paymentCheck/:bookingRef/:id", (req, res) => {
             else {
               // successfully updated payment in DB
 
-              addToFlight(data.booking).then((result) => console.log(`result`));
-              // test.then(console.log(`haha`));
-
-              // promise.then(() => {
-              //   console.log(`is has been resolved`);
-              //   setTimeout(() => {
-              //     console.log(`redirecting`);
-
-              //     res.json(
-              //       `http://localhost:3000/manage/${req.params.bookingRef}`
-              //     );
-              //   }, 1000);
-              // });
+              addToFlight(data.booking).then(() =>
+                res.redirect(
+                  `http://localhost:3000/manage/${req.params.bookingRef}`
+                )
+              );
             }
           }
         );

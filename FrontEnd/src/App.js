@@ -68,7 +68,6 @@ export default function App() {
         <Routes>
           <Route path="/manage" element={<ManageBookings />} />
           <Route path="/manage/:id" element={<Manage />} />
-          <Route path="/signup" element={<h1>Signup route</h1>} />
           <Route path="/booking" element={<h1>Booking route</h1>} />{" "}
           <Route path="/ParticularsForm" element={<ParticularsForm />} />{" "}
           <Route path="/SeatDisplay" element={<SeatDisplay />} />
