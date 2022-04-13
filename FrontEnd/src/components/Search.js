@@ -37,9 +37,7 @@ const Search = () => {
   useEffect(() => {
     setChecked(true);
   }, []);
-  useEffect(() => {
-    console.log(typeof FromValue);
-  }, [FromValue]);
+
   //HANDLECHANGE
   const handleChangePax = (event) => {
     setPaxNum(event.target.value);
@@ -86,28 +84,9 @@ const Search = () => {
   // LIST OF ALL AIRPORT CODES
   const allAirportCode = paxFrom.map((data, index) => {
     return data.airportCode;
-    // +
-    // " " +
-    // data.airportName +
-    // " " +
-    // data.cityName +
-    // " " +
-    // data.countryName
   });
-  console.log(allAirportCode);
-  console.log(paxFrom);
-  // disable past dates
-  // const yesterday = new Date().subtract(1, 'day');
-  // const disablePastDt = current => {
-  //   return current.isAfter(yesterday);
-  // };
-  //disable past dates
-  // function disablePrevDates(date) {
-  //   return date.getDay() === 0;
-  // }
 
   const today = new Date();
-  console.log(today);
   const yyyy = today.getFullYear();
   let mm = today.getMonth() + 1; // Months start at 0!
   let dd = today.getDate();

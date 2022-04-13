@@ -1,11 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, Card, Button } from "@mui/material";
-import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
-import FlightLandIcon from "@mui/icons-material/FlightLand";
-import MockKL from "../mockResponse/KL.json";
-import MockXRY from "../mockResponse/XRY.json";
-import FlightCard from "./FlightCard";
 import FlightSection from "./FlightSection";
 import BookingContext from "./context/BookingContext";
 import axios from "axios";

@@ -27,7 +27,6 @@ const FlightLeg = ({ leg }) => {
   }, [leg]);
 
   const stopHandler = (leg) => {
-    console.log(leg);
     let stopDisplay = [];
     for (let i = 0; i < leg.stops.length; i++) {
       let firstleg = JSON.parse(JSON.stringify(leg));
