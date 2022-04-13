@@ -14,18 +14,19 @@ const bcrypt = require("bcrypt");
 
 // creating new User
 router.post("/create", async (req, res) => {
-  // await Users.create(req.body);
   try {
     req.body.password = await bcrypt.hash(req.body.password, 12);
-    const createdUser = await Users.create(req.body);
-    console.log("created user is", createdUser);
+    // const createdUser = await Users.create(req.body);
+    // console.log("created user is", createdUser);
     res.json({ status: "ok", message: "user created" });
   } catch (error) {
     console.log(error);
     res.status(401).json("Error");
   }
   const newUsers = new Users({
-    name: req.body.title,
+    username: req.body.username,
+    password: req.body.password,
+    title: req.body.title,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
@@ -33,14 +34,6 @@ router.post("/create", async (req, res) => {
     countryCode: req.body.countryCode,
     passportNumber: req.body.passportNumber,
   });
-
-  // title: { type: String },
-  // firstName: { type: String },
-  // lastName: { type: String },
-  // email: { type: String },
-  // mobile: { type: Number },
-  // countryCode: { type: String },
-  // passportNumber: { type: String },
 
   await newUsers.save();
 });
