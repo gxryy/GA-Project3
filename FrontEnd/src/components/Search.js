@@ -305,6 +305,18 @@ const Search = () => {
           </Card>
         </Grow>
         <AllDestinations />
+        <Divider />
+      </Grid>
+      <Grid container justifyContent="center">
+        <Grid item xs={2}>
+          <img src={require("../Media/award1.png")} />
+        </Grid>
+        <Grid item xs={2}>
+          <img src={require("../Media/award2.png")} />
+        </Grid>
+        <Grid item xs={2}>
+          <img src={require("../Media/award3.png")} />
+        </Grid>
       </Grid>
     </>
   );
