@@ -13,7 +13,7 @@ import {
 import { nanoid } from "nanoid";
 import SeatDisplay from "./SeatDisplay";
 import axios from "axios";
-import { LegendToggleSharp } from "@mui/icons-material";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const SeatSelector = () => {
   const bookingContext = useContext(BookingContext);
@@ -25,7 +25,7 @@ const SeatSelector = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [passengerSelected, setPassengerSelected] = useState(0);
   const [seatSelection, setSeatSelection] = useState([]);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   // Initial effect to set legs and passenger states from context
   useEffect(() => {
@@ -68,6 +68,16 @@ const SeatSelector = () => {
 
         return newSeatMap;
       });
+    }
+    let seatCounter = 0;
+    for (let person of seatSelection) {
+      for (let seat of person) {
+        if (seat) seatCounter++;
+      }
+    }
+    if (seatCounter > 0) {
+      if (seatCounter === legs.length * passengers.length)
+        setButtonDisabled(false);
     }
   }, [seatSelection]);
 
@@ -168,10 +178,8 @@ const SeatSelector = () => {
     let newlegs = JSON.parse(JSON.stringify(legs));
 
     for (let index in legs) {
-      console.log(seatMap[index]);
       newlegs[index].seatMap = seatMap[index];
     }
-    console.log(newlegs);
     bookingContext.booking.legs = newlegs;
     let farePerPax = 0;
     bookingContext.booking.selectedFlight.map(
@@ -214,7 +222,13 @@ const SeatSelector = () => {
         })}
       </Box>
       <Box>
-        <Button disabled={buttonDisabled} onClick={nextHandler}>
+        <Button
+          disabled={buttonDisabled}
+          onClick={nextHandler}
+          size="large"
+          endIcon={<ArrowForwardIosIcon />}
+          sx={{ marginY: "2em" }}
+        >
           Next
         </Button>
       </Box>

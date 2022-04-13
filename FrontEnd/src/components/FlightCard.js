@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import { Box, Typography, Stack, Button, Container } from "@mui/material";
 import { nanoid } from "nanoid";
 import FlightLeg from "./FlightLeg";
-import BookingContext from "./context/BookingContext";
 
 const FlightCard = ({
   flightSegments,
@@ -11,10 +10,6 @@ const FlightCard = ({
   selectedFlight,
   displaySelect = true,
 }) => {
-  useEffect(() => {
-    console.log(selectedFlight);
-  }, [selectedFlight]);
-
   const clickHandler = () => {
     setSelectedFlight((prev) => {
       let updated = JSON.parse(JSON.stringify(prev));

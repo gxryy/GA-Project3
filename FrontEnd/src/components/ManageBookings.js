@@ -23,6 +23,7 @@ const ManageBookings = () => {
   const [lastName, setLastName] = useState("");
   const navigate = useNavigate();
   const bookingContext = useContext(BookingContext);
+  const params = useParams();
   const GreyTextTypography = withStyles({
     root: {
       color: "grey",
@@ -31,7 +32,21 @@ const ManageBookings = () => {
 
   useEffect(() => {
     setChecked(true);
+    if (params.id) {
+      console.log(`there is ID`);
+      console.log(params.id);
+      setBookingRef(params.id);
+      setLastName(params.lastName);
+    } else {
+      console.log(`no id`);
+    }
   }, []);
+
+  useEffect(() => {
+    console.log(`booking ref changed`);
+    console.log(bookingRef);
+    if (params.id) handleSubmit();
+  }, [bookingRef]);
 
   const handleChangeBookingRef = (event) => {
     let bookingRef = event.target.value;
@@ -44,12 +59,13 @@ const ManageBookings = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
+    if (e) e.preventDefault();
     let data = JSON.stringify({
       bookingRef: bookingRef,
       lastName: lastName,
     });
+    console.log(data);
+    console.log(bookingRef);
 
     let config = {
       method: "post",
@@ -66,6 +82,9 @@ const ManageBookings = () => {
         else {
           console.log(response.data);
           bookingContext.booking = response.data.booking;
+          bookingContext.booking.type = "manage";
+          bookingContext.booking.paymentSuccess = response.data.paymentSuccess;
+          bookingContext.booking.bookingRef = response.data.bookingRef;
           navigate("/summary");
         }
       })
@@ -125,7 +144,7 @@ const ManageBookings = () => {
             <Divider variant="middle" />
             <br />
             <GreyTextTypography sx={{ marginLeft: 3 }} align="left">
-              Booking reference number should be 6 characters, e.g "LXS0MZQT"
+              Booking reference number should be 8 characters, e.g "LXS0MZQT"
               <br />
             </GreyTextTypography>
             <div>

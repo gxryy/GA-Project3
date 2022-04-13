@@ -4,47 +4,15 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 
 const SeatDisplay = (props) => {
-  // mock props/context
-  // let propsflightNumber = 710;
-  // let propsdepartureDateTime = "2022-06-01 12:50:00";
-  // let propscabinClass = "Y";
-  // let propsnumberOfPax = 3;
-
-  // States for seatMap
-  // const [seatMap, setSeatMap] = useState([]);
   const [JSeatDisplay, setJSeatDisplay] = useState(<></>);
   const [YSeatDisplay, setYSeatDisplay] = useState(<></>);
-  // console.log(props);
-  const seatMap = props.seatMap;
 
-  // Calls the BE for seatmap
-  useEffect(async () => {
-    let data = JSON.stringify({
-      flightNumber: props.flightNumber,
-      departureDateTime: props.departureDateTime,
-    });
-    let config = {
-      method: "post",
-      url: "http://127.0.0.1:5001/getSeats",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-    axios(config)
-      .then((response) => {
-        // setSeatMap(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const seatMap = props.seatMap;
 
   useEffect(() => {
     // do create render when there is seatMap
     let JSeatArray = [];
     let YSeatArray = [];
-    // console.log(props);
     if (seatMap) {
       for (let seat of seatMap) {
         seat.cabinClass == "J" ? JSeatArray.push(seat) : YSeatArray.push(seat);

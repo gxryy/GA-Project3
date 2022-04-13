@@ -4,17 +4,17 @@ import { Button, Card, Typography, Container, Box, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
 import FlightCard from "./FlightCard";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import PaidIcon from "@mui/icons-material/Paid";
 
-const Summary = () => {
+const Summary = (props) => {
   const bookingContext = useContext(BookingContext);
-  console.log(bookingContext.booking);
   const [passengerDetails, setPassengerDetails] = useState([]);
   const [flightDetails, setFlightDetails] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(bookingContext.booking);
     let summary = [];
     for (let i = 0; i < bookingContext.booking.passengerInfo.length; i++) {
       summary.push(
@@ -22,9 +22,15 @@ const Summary = () => {
           <Typography variant="h4" key={nanoid()}>
             Passenger {i + 1}
           </Typography>
-          <Typography variant="h6" key={nanoid()}>
-            Passenger Details
-          </Typography>
+          {bookingContext.booking.queryParams.cabinClass == "Y" ? (
+            <Typography variant="h6">
+              <strong>ECONOMY</strong>
+            </Typography>
+          ) : (
+            <Typography variant="h6">
+              <strong>BUSINESS</strong>
+            </Typography>
+          )}
           <Typography variant="p" key={nanoid()}>
             <strong>Name: </strong>
             {bookingContext.booking.passengerInfo[i].title +
@@ -93,7 +99,6 @@ const Summary = () => {
       })
       .then(({ url }) => {
         window.location = url;
-        console.log(url);
       })
       .catch((e) => {
         console.log(e.error);
@@ -102,31 +107,84 @@ const Summary = () => {
 
   return (
     <>
-      <Card sx={{ minWidth: 275 }}>
+      <Container sx={{ marginY: "1em" }} maxWidth="xl">
         <Typography variant="h2">Booking Summary</Typography>
-        <Typography variant="h4">Passenger Details</Typography>
-        <Stack direction="row">{passengerDetails}</Stack>
-        <Typography variant="h4">Flight Details</Typography>
-        <Container>{flightDetails}</Container>
-        <Container>
+        {bookingContext.booking.type == "manage" && (
+          <Typography variant="h3">
+            Booking Reference: {bookingContext.booking.bookingRef}
+          </Typography>
+        )}
+        <Container sx={{ marginY: "1.5em" }}>
+          <Typography variant="h4">Passenger Details</Typography>
+          <Stack direction="row" sx={{ marginY: "1em" }}>
+            {passengerDetails}
+          </Stack>
+        </Container>
+        <Container sx={{ marginY: "1.5em" }}>
+          <Typography variant="h4">Flight Details</Typography>
+          <Container>{flightDetails}</Container>
+        </Container>
+        <Container sx={{ marginY: "1em" }}>
           <Typography variant="h5">
-            Fare per passenger: ${bookingContext.booking.farePerPax}
+            Fare per passenger: $
+            {(
+              Math.round(bookingContext.booking.farePerPax * 100) / 100
+            ).toFixed(2)}
           </Typography>
           <Typography variant="h4">
             Grand Total: $
-            {bookingContext.booking.farePerPax *
-              bookingContext.booking.passengerInfo.length}
+            {(
+              Math.round(
+                bookingContext.booking.farePerPax *
+                  bookingContext.booking.passengerInfo.length *
+                  100
+              ) / 100
+            ).toFixed(2)}
           </Typography>
         </Container>
-
-        <Button type="submit" onClick={handleSubmitEdit}>
-          Edit
-        </Button>
-        <Button type="submit" onClick={paymentHandler}>
-          {" "}
-          Make Payment
-        </Button>
-      </Card>
+        {bookingContext.booking.type == "manage" ? (
+          <Container>
+            <Typography variant="h4">
+              Payment Status:{" "}
+              {bookingContext.booking.paymentSuccess
+                ? "Success"
+                : "Unsuccessful"}
+            </Typography>
+            {!bookingContext.booking.paymentSuccess && (
+              <Button
+                type="submit"
+                onClick={paymentHandler}
+                size="large"
+                endIcon={<PaidIcon />}
+                sx={{ marginY: "2em" }}
+              >
+                Make Payment
+              </Button>
+            )}
+          </Container>
+        ) : (
+          <Container>
+            <Button
+              type="submit"
+              onClick={handleSubmitEdit}
+              size="large"
+              endIcon={<ModeEditIcon />}
+              sx={{ marginY: "2em" }}
+            >
+              Edit
+            </Button>
+            <Button
+              type="submit"
+              onClick={paymentHandler}
+              size="large"
+              endIcon={<PaidIcon />}
+              sx={{ marginY: "2em" }}
+            >
+              Make Payment
+            </Button>
+          </Container>
+        )}
+      </Container>
     </>
   );
 };

@@ -4,11 +4,9 @@ import ParticularsForm from "./ParticularsForm";
 
 const Signup = (props) => {
   const [details, setDetails] = useState([]);
-  console.log(details);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(e.target.Username.value);
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -57,13 +55,15 @@ const Signup = (props) => {
           <TextField
             name="Username"
             required
-            label="username"
+            variant="filled"
+            label="Username"
             margin="normal"
             sx={{ width: "40%" }}
           ></TextField>
           <TextField
             name="Password"
             label="Password"
+            variant="filled"
             margin="normal"
             sx={{ width: "30%" }}
           ></TextField>

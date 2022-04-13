@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
 import ParticularsForm from "./ParticularsForm";
 import BookingContext from "./context/BookingContext";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const PassengerDetails = () => {
   const bookingContext = useContext(BookingContext);
@@ -37,7 +38,6 @@ const PassengerDetails = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(details);
     bookingContext.setBooking((prev) => {
       let updated = { ...prev, passengerInfo: details };
       return updated;
@@ -50,7 +50,15 @@ const PassengerDetails = () => {
       <Typography variant="h1">Passenger Details</Typography>
       <form onSubmit={submitHandler}>
         {formDisplay}
-        <Button type="submit"> Next</Button>
+        <Button
+          type="submit"
+          size="large"
+          endIcon={<ArrowForwardIosIcon />}
+          sx={{ marginY: "2em" }}
+        >
+          {" "}
+          Next
+        </Button>
       </form>
     </div>
   );
