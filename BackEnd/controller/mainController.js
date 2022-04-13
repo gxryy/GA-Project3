@@ -6,9 +6,50 @@ const fetchDestinations = require("../SQ_API/fetchDestinations");
 const fetchFlights = require("../SQ_API/fetchFlights");
 const Bookings = require("../model/bookings");
 const Flights = require("../model/flights");
+const Users = require("../model/users");
 const { nanoid, customAlphabet } = require("nanoid");
 const stripe = require("stripe")(process.env.REACT_APP_STRIPE_SECRET_KEY);
 const refGenerator = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8);
+const bcrypt = require("bcrypt");
+
+// creating new User
+router.post("/create", async (req, res) => {
+  // await Users.create(req.body);
+  try {
+    req.body.password = await bcrypt.hash(req.body.password, 12);
+    const createdUser = await Users.create(req.body);
+    console.log("created user is", createdUser);
+    res.json({ status: "ok", message: "user created" });
+  } catch (error) {
+    console.log(error);
+    res.status(401).json("Error");
+  }
+  const newUsers = new Users({
+    name: req.body.title,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    mobile: req.body.mobile,
+    countryCode: req.body.countryCode,
+    passportNumber: req.body.passportNumber,
+  });
+
+  // title: { type: String },
+  // firstName: { type: String },
+  // lastName: { type: String },
+  // email: { type: String },
+  // mobile: { type: Number },
+  // countryCode: { type: String },
+  // passportNumber: { type: String },
+
+  await newUsers.save();
+});
+
+// see all Users
+router.get("/allUsers", async (req, res) => {
+  const allUsers = await Users.find();
+  res.json(allUsers);
+});
 
 // creating a session
 router.post("/makePayment", async (req, res) => {
