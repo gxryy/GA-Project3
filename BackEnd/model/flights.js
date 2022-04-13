@@ -13,6 +13,7 @@ const flightSchema = new Schema({
   layoverDuration: Number, // in seconds
   stops: Array,
   seatMap: Array,
+  passengers: Array,
 });
 
 const Flights = mongoose.model("Flights", flightSchema);

@@ -6,52 +6,87 @@ const fetchDestinations = require("../SQ_API/fetchDestinations");
 const fetchFlights = require("../SQ_API/fetchFlights");
 const Bookings = require("../model/bookings");
 const Flights = require("../model/flights");
+const { nanoid, customAlphabet } = require("nanoid");
 const stripe = require("stripe")(process.env.REACT_APP_STRIPE_SECRET_KEY);
+const refGenerator = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8);
 
-const storeItems = new Map([
-  [1, { priceInCents: 80000, name: "Ticket to Jerez" }],
-  [2, { priceInCents: 30000, name: "Ticket to KL" }],
-]);
 // creating a session
-router.post("/create-checkout-session", async (req, res) => {
-  console.log(req.body);
+router.post("/makePayment", async (req, res) => {
+  console.log(`in payment`);
+  let booking = req.body;
+  let bookingRef = refGenerator();
+  let pSuccessID = nanoid();
+  let pFailID = nanoid();
+
   try {
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      payment_method_types: ["card", "grabpay", "paynow", "alipay"],
       mode: "payment",
-      line_items: req.body.items.map((item) => {
-        const storeItem = storeItems.get(item.id);
+      line_items: booking.selectedFlight.map((flight) => {
         return {
           price_data: {
             currency: "sgd",
             product_data: {
-              name: storeItem.name,
+              name: `Flight: ${flight.originAirportCode} to ${flight.destinationAirportCode}`,
             },
-            unit_amount: storeItem.priceInCents,
+            unit_amount: Math.floor(flight.fare) * 100,
           },
-          quantity: item.quantity,
+          quantity: booking.passengerInfo.length,
         };
       }),
-      success_url: `${process.env.SERVER_URL}/success`,
-      cancel_url: `${process.env.SERVER_URL}/summary`,
+      success_url: `http://localhost:5001/paymentCheck/${bookingRef}/${pSuccessID}`,
+      cancel_url: `http://localhost:5001/paymentCheck/${bookingRef}/${pFailID}`,
     });
     res.json({ url: session.url });
+    createBooking(booking, bookingRef, pSuccessID, pFailID);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
+router.get("/paymentCheck/:bookingRef/:id", (req, res) => {
+  // get id and check against DB for payment fail or success..
+  // if fail then redirect to failure route in frontend
+  // if success then show booking reference
+
+  console.log(req.params.id);
+  console.log(req.params.bookingRef);
+  Bookings.findOne({ bookingRef: req.params.bookingRef }, (err, data) => {
+    if (data) {
+      console.log(`found`);
+      if (req.params.id == data.pSuccessID) {
+        console.log(`payment pass`);
+        Bookings.findOneAndUpdate(
+          { _id: data._id },
+          { paymentSuccess: true },
+          (err, data) => {
+            if (err) console.log(err);
+            else {
+              // successfully updated payment in DB
+              new Promise((resolve, reject) => {
+                addToFlight(data.booking);
+                resolve();
+              }).then(() => {
+                res.redirect(
+                  `http://localhost:3000/manage/${req.params.bookingRef}`
+                );
+              });
+            }
+          }
+        );
+      } else {
+        console.log(`payment fail`);
+        res.redirect(`http://localhost:3000/paymentfail`);
+      }
+    } else console.log(`Booking Reference Not Found in DB!`);
+    if (err) console.log(err);
+  });
+
+  // res.json(`checking`);
+});
+
 router.get("/bookings", async (req, res) => {
   const createBooking = new Bookings({
-    details: [
-      {
-        title: "Miss",
-        firstname: "Haha",
-        lastname: "Hehe",
-        mobile: 91820120,
-        email: "haha@gmail.com",
-      },
-    ],
     flightdetails: [{ flightnumber: 712 }, { seatnumber: "1A" }],
     flyerNumber: 123,
     bookingRef: "45A6",
@@ -184,13 +219,11 @@ router.post("/getFlights", (req, res) => {
 });
 
 router.post("/getSeats", (req, res) => {
-  console.log(`in getseats backend`);
-  console.log(req.body);
   Flights.findOne(
     {
       $and: [
-        { flightNumber: req.body.flightNumber },
-        { departureDateTime: req.body.departureDateTime },
+        { flightNumber: req.body.leg.flightNumber },
+        { departureDateTime: req.body.leg.departureDateTime },
       ],
     },
     (err, data) => {
@@ -200,7 +233,17 @@ router.post("/getSeats", (req, res) => {
       } else {
         console.log(data);
         if (data) res.json(data.seatMap);
-        else res.json(seatMapGenerator());
+        else {
+          generatedSeatMap = seatMapGenerator();
+
+          Flights.create(
+            { ...req.body.leg, passengers: [], seatMap: generatedSeatMap },
+            (err, data) => {
+              if (err) console.log(`flight db create fail`);
+            }
+          );
+          res.json(generatedSeatMap);
+        }
       }
     }
   );
@@ -268,6 +311,79 @@ const seatMapGenerator = () => {
   }
 
   return seatmap;
+};
+
+const createBooking = async (booking, bookingRef, pSuccessID, pFailID) => {
+  const newBooking = new Bookings({
+    bookingRef,
+    flyerNumber: 0,
+    booking,
+    paymentSuccess: false,
+    pSuccessID,
+    pFailID,
+  });
+  await newBooking.save((err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(`inserted to DB`);
+    }
+  });
+};
+
+const addToFlight = (booking) => {
+  console.log(`in addtoflight`);
+  console.log(booking.selectedFlight);
+
+  for (let legIndex in booking.legs) {
+    Flights.findOne(
+      {
+        flightNumber: booking.legs[legIndex].flightNumber,
+        departureDateTime: booking.legs[legIndex].departureDateTime,
+      },
+      (err, data) => {
+        if (err) console.log(`error in finding flight in db`);
+        if (data) {
+          console.log(`there is flight in db`);
+          // there is exiting flight in flights db
+          // update seatMap and passenger details
+          // update SeatMap
+          let newseatmap = JSON.parse(JSON.stringify(data.seatMap));
+          for (seatIndex in newseatmap) {
+            for (passenger of booking.seatSelection) {
+              if (newseatmap[seatIndex].seat == passenger[legIndex]) {
+                console.log(`seat matched`);
+                newseatmap[seatIndex].isVacant = false;
+                newseatmap[seatIndex].source = "booked";
+                console.log(booking.legs[legIndex].flightNumber);
+                console.log(newseatmap[seatIndex]);
+              }
+            }
+          }
+
+          let passengers = JSON.parse(JSON.stringify(data.passengers));
+          passengers.push(...booking.passengerInfo);
+
+          Flights.findByIdAndUpdate(
+            data._id,
+            {
+              seatMap: newseatmap,
+              passengers: passengers,
+            },
+            (err, data) => {
+              if (err) console.log(`error in updating`);
+              if (data) console.log(`updated`);
+            }
+          );
+
+          // console.log(data);
+        } else {
+          // no flights in flights db: to create
+          console.log(`no existing flights`);
+        }
+      }
+    );
+  }
 };
 
 module.exports = router;
