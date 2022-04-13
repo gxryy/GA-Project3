@@ -10,6 +10,8 @@ const { nanoid, customAlphabet } = require("nanoid");
 const stripe = require("stripe")(process.env.REACT_APP_STRIPE_SECRET_KEY);
 const refGenerator = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8);
 
+//ROUTES
+//Endpoint for getting a booking, verifies the booking reference and last name
 router.post("/getBooking", (req, res) => {
   Bookings.findOne(
     { bookingRef: req.body.bookingRef.toUpperCase() },
@@ -32,7 +34,8 @@ router.post("/getBooking", (req, res) => {
   );
 });
 
-// creating a session
+//Endpoint for stripe payment and stores the booking context into db, with paymentSuccess false.
+//creates 2 uid for payment and fail respectively. stripe to redirect to the Express url that captires the ref and id before res send a redirect to success/failure route in react
 router.post("/makePayment", async (req, res) => {
   console.log(`in payment`);
   let booking = req.body;
@@ -86,19 +89,11 @@ router.get("/paymentCheck/:bookingRef/:id", (req, res) => {
             else {
               // successfully updated payment in DB
 
-              addToFlight(data.booking).then((result) => console.log(`result`));
-              // test.then(console.log(`haha`));
-
-              // promise.then(() => {
-              //   console.log(`is has been resolved`);
-              //   setTimeout(() => {
-              //     console.log(`redirecting`);
-
-              //     res.json(
-              //       `http://localhost:3000/manage/${req.params.bookingRef}`
-              //     );
-              //   }, 1000);
-              // });
+              addToFlight(data.booking).then(() =>
+                res.redirect(
+                  `http://localhost:3000/manage/${req.params.bookingRef}`
+                )
+              );
             }
           }
         );
