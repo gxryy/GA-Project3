@@ -136,52 +136,6 @@ router.get("/paymentCheck/:bookingRef/:id", (req, res) => {
   // res.json(`checking`);
 });
 
-router.get("/bookings", async (req, res) => {
-  const createBooking = new Bookings({
-    flightdetails: [{ flightnumber: 712 }, { seatnumber: "1A" }],
-    flyerNumber: 123,
-    bookingRef: "45A6",
-  });
-  await createBooking.save((err, data) => {
-    if (err) {
-      console.error(err);
-    } else {
-      res.status(200).send({ msg: "Inserted to DB" });
-    }
-  });
-});
-
-// Flights
-router.get("/flights", async (req, res) => {
-  const createFlights = new Flights({
-    aircraft: {
-      code: "359",
-      name: "Airbus A350-900",
-    },
-    arrivalDateTime: "2022-06-01 14:20:00",
-    departureDateTime: "2022-06-01 12:50:00",
-    departureTerminal: "3",
-    destinationAirportCode: "BKK",
-    originAirportCode: "SIN",
-    flightDuration: 9000,
-    flightNumber: "710",
-    marketingAirline: {
-      code: "SQ",
-      name: "Singapore Airlines",
-    },
-    layoverDuration: 0,
-    stops: [],
-    seatMap: seatMapGenerator(),
-  });
-  await createFlights.save((err, data) => {
-    if (err) {
-      console.error(err);
-    } else {
-      res.status(200).send({ msg: "Inserted to DB" });
-    }
-  });
-});
-
 router.get("/getDestinations", (req, res) => {
   console.log(`fetching destinations`);
   fetchDestinations().then((response) => {
