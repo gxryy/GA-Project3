@@ -21,13 +21,43 @@ This app was developed for my General Assembly Software Engineering Immersive Pr
 - Search
   - Search form with auto complete based on Destinations from SIA's API.
   - Mandatory form to query for flights
-- ## Results
+- Results
+- Renders flight information based on response from Express. Calls on FlightSection, FlightCard, FlightLeg and LegCard components.
+- FlightSections renders the section based on the number of origin and destination airport selecte. E.g. One Way flights would result in one section returned and rendered while a return / multiple destinations flight would have more than one sections renedered.
+- FlightCard renders each flight card, which are possible flight options for the respective section.
+- lightLeg handles stops for every leg and calls on the LegCard rendering.
 - PassengerDetails
+  - General form which calls on Particular Details component based on the number of passengers on the flight.
 - SeatSelector
+  - Retrieves seatMap from Express and calls on SeatDisplay to render the seats for each leg of the flight.
 - Summary
+- Renders passenger details and flight details based on information in booking context.
+- Conditionally renders booking reference, payment, and edit details based on standard mode or manage mode.
 - Manage Bookings
+  - Form that submits booking reference and last name to Express (/getBooking) for validation.
+  - Shows summary page in manage mode upon receiving the booking object with the booking details.
 
 ### Express (BackEnd)
+
+- ## Endpoints
+- getBooking(GET)
+
+  - retrieves booking info based on booking reference from Mongo. Compares the last names of passengers before returning the booking object.
+
+- makePayment (POST)
+
+  - Generates a 8 alphanumeric booking ref if req doesnt come with it.
+  - Generates a payment success ID and a payment fail ID.
+  - Calls on stripe API with flight details and total fare. stripe to redirect to sever endpoint (/paymentCheck) with booking ref and payment success of fail ID.
+  - Calls on createBooking function with booking object, booking ref, payment success ID and payment fail ID.
+
+- paymentCheck/:bookingRef/:id (GET)
+
+- ## Functions
+
+- CreateBooking
+  - Creates a new document in mongo for new bookings, storing the booking object, booking ref, payment success ID and payment failure ID.
+  - Updates payment success ID and payment failure ID for existing booking.
 
 ### MongoDB Atlas (Database)
 
@@ -55,8 +85,13 @@ The "cancel_url:" is for when the payment fails.
 
 The user is routed to a summary page which displays the details of the current booking if successful and to an error page that tells the user payment has failed if payment is unsuccessful.
 
-## Future Features
-
 ## Known Issues
 
+- Results page continues to show the loader and without an error when there are no flights available from the API.
+
 ## Future Works
+
+- Selection of oneway / return / multiple destinations
+- user account management for tracking of booked flights
+- Admin account for changing of seats and retrival of flight manifest
+- Separation of context for booking and mangement respectively
