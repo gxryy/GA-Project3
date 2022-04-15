@@ -115,14 +115,11 @@ The logic flow for a standard flight booking
 For payment, this project integrates stripe to allow for the payment of flight tickets selected by the user with a checkout page. In essence, stripe accepts a request made to its server and then returns a url that is a checkout page displaying payment options with flight tickets booked by the user earlier.
 ![Screenshot 2022-04-14 at 4 32 16 PM](/Media/stripe1.png)
 
-Information such as the product's name, price, quantity and are sent to stripe and a url with all the product info is generated.
+Information such as the product's name, price, quantity and are sent to stripe and a url with the product info is generated.
 
-![Screenshot 2022-04-14 at 4 26 40 PM](/Media/stripe2.png)
+On successful payment, the user is then redirected to a summary page which displays the booking details.
+On failed payment, the user is redirected to a failed payment page with a button to route the user back to the main page.
 
-The "success_url:" is the url which the user will be redirected to should the payment be successful.
-The "cancel_url:" is for when the payment fails.
-
-The user is routed to a summary page which displays the details of the current booking if successful and to an error page that tells the user payment has failed if payment is unsuccessful.
 
 ## Known Issues
 
